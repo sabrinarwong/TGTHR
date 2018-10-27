@@ -27,7 +27,7 @@ export default class HomeScreen extends React.Component {
   animate(){
     Animated.timing(this.animated,{
       toValue:1,
-      duration:3000,
+      duration:1000,
     }).start();
   }
 
@@ -56,7 +56,7 @@ export default class HomeScreen extends React.Component {
             {this._maybeRenderDevelopmentModeWarning()}
             */}
 
-            {this.animate()}
+            {/*this.animate()*/}
 
             <Text style={styles.getStartedText}>Welcome to </Text>
             <Animated.Text style={[styles.tgthrMain, {backgroundColor: 'transparent'},{opacity}]}>
@@ -69,7 +69,7 @@ export default class HomeScreen extends React.Component {
             </View>
             */}
             <Text style={styles.getStartedText}>
-              The better way to meet.
+              The unbetter way to meet.
             </Text>
           </View>
 
@@ -77,6 +77,73 @@ export default class HomeScreen extends React.Component {
           <Button title="I need help!" onPress={()=>this.animate()}/>
 
           </View>
+
+          <View style={styles.buttonMain}>
+          <Button title="I need help!" color="green" onPress={()=>this.animate()}/>
+
+          </View>
+
+          <View style={styles.buttonMain}>
+          <Button title="I need help!" color="purple" onPress={()=>this.animate()}/>
+
+          </View>
+          <View style={styles.buttonMain}>
+          <Button title="I need help!" color="green" onPress={()=>this.animate()}/>
+
+          </View>
+          <View style={styles.buttonMain}>
+          <Button title="I need help!" color="red" onPress={()=>this.animate()}/>
+
+          </View>
+          <View style={styles.buttonMain}>
+          <Button title="I need help!" color="green" onPress={()=>this.animate()}/>
+
+          </View>
+          <View style={styles.buttonMain}>
+          <Button title="I need help!" color="red" onPress={()=>this.animate()}/>
+
+          </View>
+          <View style={styles.buttonMain}>
+          <Button title="I need help!" onPress={()=>this.animate()}/>
+
+          </View>
+          <View style={styles.buttonMain}>
+          <Button title="I need help!" color="orange" onPress={()=>this.animate()}/>
+
+          </View>
+          <View style={styles.buttonMain}>
+          <Button title="I need help!" color="green" onPress={()=>this.animate()}/>
+
+          </View>
+          <View style={styles.buttonMain}>
+          <Button title="I need help!" color="orange" onPress={()=>this.animate()}/>
+
+          </View>
+          <View style={styles.buttonMain}>
+          <Button title="I need help!" onPress={()=>this.animate()}/>
+
+          </View>
+          <View style={styles.buttonMain}>
+          <Button title="I need help!" onPress={()=>this.animate()}/>
+
+          </View>
+
+
+
+          <View style={styles.welcomeContainer}>
+            <Image
+              source={require('../assets/images/robot-dev.png')}
+              style={styles.welcomeImage}
+            />
+            {/* for some reason, comments are like his so idk */}
+            {/* displays the tgthr logo with the 'welcomeImage' style specified below. */}
+          </View>
+
+
+
+
+
+
           {/*
           <View style={styles.helpContainer}>
             <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
@@ -86,9 +153,10 @@ export default class HomeScreen extends React.Component {
           */}
         </ScrollView>
 
+
         <View style={styles.tabBarInfoContainer}>
           <Text style={styles.tabBarInfoText}>
-            Disclaimer, the button does nothing at the moment.
+            Press a colored button to animate the text!
           </Text>
           {/*
           <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
@@ -148,6 +216,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingTop: 30,
+    paddingBottom: 75,
   },
   welcomeContainer: {
     alignItems: 'center',
