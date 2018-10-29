@@ -51,6 +51,7 @@ ProfileStack.navigationOptions = {
       focused={focused}
       name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link'}
     />
+    /* need to fix tab bar icon to show profile picture*/
   ),
 };
 

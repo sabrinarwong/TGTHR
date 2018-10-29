@@ -11,32 +11,61 @@ import {
 } from 'react-native';
 
 export default class ProfileScreen extends React.Component {
+
 	static navigationOptions = {
 		title: 'Profile',
 	};
 	render() {
   	return(
-  		<ScrollView>
+  		<ScrollView style={{marginTop: 20}}>
     	<View style={styles.container}>
 
 					{/* display profile picture */}
     			<View style={styles.profileContainer}>
     				<Image source={require('../assets/images/profile/profile.jpg')} style={styles.profileImage}/>
-    				<Text style={styles.nameText}> Sabrina Wong {/*firstName lastName */} </Text>
+    				<View>
+    					<Text style={styles.nameText}> Robert Richard {/*firstName lastName */} </Text>
+  						<Text style={{marginLeft: 20, fontSize: 19}}> Riverside, CA {/* insert user information */} </Text>
+  					</View>
        		</View>
+
 					{/* display user bio */}
+    			<View style={styles.informationContainer}>
+						<Text style={styles.bioText}><Text>Bio: </Text>
+						Spent high school summers managing jump ropes in Fort Walton Beach, FL. Spent college summers promoting wooden trains for no pay. Had a brief career getting my feet wet with easy-bake-ovens in Atlantic City, NJ.
+						</Text>
 
 					{/* display profile information */}
-    			<View style={styles.informationContainer}>
-    				<Text style={styles.infoText}> Email: swong040@ucr.edu {/* insert user information */}</Text>
-    				<Text style={styles.infoText}> City: Riverside, CA {/* insert user information */} </Text>
+    				<Text style={styles.infoText}> Email: bob@google.com {/* insert user information */}</Text>
     			</View>
-    	</View>
+
+					{/* display social media connected */}
+					{/* FIX: if connected then full color.
+						if not then grey tone, */}
+    			<View style={styles.socialView}>
+						<TouchableOpacity onPress={this.social1} style={styles.socialButton}>
+						   <Image style={styles.socialImage} source={require('../assets/images/profile/icons/facebook.png')}/>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={this.social1} style={styles.socialButton}>
+						   <Image style={styles.socialImage} source={require('../assets/images/profile/icons/google-plus.png')}/>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={this.social1} style={styles.socialButton}>
+						   <Image style={styles.socialImage} source={require('../assets/images/profile/icons/twitter.png')}/>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={this.social1} style={styles.socialButton}>
+						   <Image style={styles.socialImage} source={require('../assets/images/profile/icons/whatsapp.png')}/>
+						</TouchableOpacity>
+					</View>
+
+			<TouchableOpacity onPress={this.onPress} style={styles.editProfile}>
+			   <Text style={styles.buttonText}> Edit Profile </Text>
+			</TouchableOpacity>
+			</View>
     	</ScrollView>
   	);
 	}
-
 }
+
 const styles = StyleSheet.create({
 	container:{
 		flex: 1,
@@ -46,9 +75,9 @@ const styles = StyleSheet.create({
 		paddingTop: 20,
 	},
 	profileContainer:{
-		alignItems: 'center',
+		flexDirection: 'row',
 		marginTop: 40,
-		marginBottom: 20,
+		margin: 15,
 	},
 	profileImage:{
 		borderWidth:1,
@@ -59,20 +88,60 @@ const styles = StyleSheet.create({
 		height:100,
 		backgroundColor:'#fff',
 		borderRadius:50,
-		marginBottom: 10,
+		marginBottom: 5,
 	},
 	informationContainer:{
 		alignItems: 'left',
+		fontSize: 16,
+		marginTop: 5,
+		marginLeft: 20,
+		marginRight: 20,
+		marginBottom: 15,
+	},	
+	bioText:{
+		alignItems: 'center',
+		fontSize: 16,
 		marginTop: 10,
-		marginLeft: 5,
-		marginRight: 5,
+		marginLeft: 20,
+		marginRight: 20,
 		marginBottom: 15,
 	},
 	nameText:{
-		fontSize: 27,
+		fontSize: 30,
+		margin: 15,
+		marginBottom: 5,
 	},
 	infoText:{
-		fontSize: 17,
+		fontSize: 19,
 	},
-	
+	editProfile:{
+		alignItems:'center',
+    borderWidth: 1,
+    padding: 20,
+    borderColor: 'black',
+    backgroundColor: 'blue',
+    borderRadius: 15,
+    marginTop: 60,
+    marginRight: 100,
+    marginLeft: 100,
+	},
+	buttonText:{
+			fontSize: 22,
+			color: 'white',
+	},
+	socialView:{
+		alignItems: 'center',
+		flexDirection: 'row',
+	},
+	socialButton:{
+		position: 'relative',
+    padding: 10,
+	},
+	socialImage:{
+		flex: 1,
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+		resizeMode: 'contain',
+	},
 });
