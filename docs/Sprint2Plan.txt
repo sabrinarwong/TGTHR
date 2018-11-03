@@ -1,0 +1,22 @@
+
+
+sprint 2
+
+still do:
+FINISH SPRINT 1
+- apollo merge login page (splash screen to login page)
+- sabrina finish connectivity on profile
+- brandon links page on android to be fixed
+
+
+userstory
+1. specific event page (Host event) - brandon
+2. edit profile information - sabrina
+	- change stuff and delete
+3. implement a GD database (FIREBASE) - ryan
+4. push notification - apollo
+	- events
+
+**if time
+4. maps api -> page ( user story 1 ) - brandon
+5. ryan stuff on homepage ( nearby, suggested, friends, map, event of the day, random BS)
