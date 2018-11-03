@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 // import ProfileImage from '../assets/images/profile/'
 import {
 	StyleSheet,
@@ -91,13 +91,12 @@ const styles = StyleSheet.create({
 		marginBottom: 5,
 	},
 	informationContainer:{
-		alignItems: 'left',
-		fontSize: 16,
+		alignItems: 'center',
 		marginTop: 5,
 		marginLeft: 20,
 		marginRight: 20,
 		marginBottom: 15,
-	},	
+	},
 	bioText:{
 		alignItems: 'center',
 		fontSize: 16,
