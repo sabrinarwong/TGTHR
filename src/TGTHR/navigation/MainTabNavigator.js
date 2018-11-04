@@ -4,38 +4,34 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import EventsScreen from '../screens/EventsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import AboutScreen from '../screens/AboutScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
 });
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Super awesome home screen',
+  tabBarLabel: 'Home',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
+      name={'md-home'}
     />
   ),
 };
 
-const LinksStack = createStackNavigator({
-  Links: LinksScreen,
+const EventsStack = createStackNavigator({
+  Events: EventsScreen,
 });
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+EventsStack.navigationOptions = {
+  tabBarLabel: 'Events',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link'}
+      name={'md-list'}
     />
   ),
 };
@@ -49,29 +45,28 @@ ProfileStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link'}
+      name={'md-person'}
     />
-    /* need to fix tab bar icon to show profile picture*/
   ),
 };
 
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen,
+const AboutStack = createStackNavigator({
+  About: AboutScreen,
 });
 
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
+AboutStack.navigationOptions = {
+  tabBarLabel: 'About',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
+      name={'md-information-circle'}
     />
   ),
 };
 
 export default createBottomTabNavigator({
   HomeStack,
-  LinksStack,
-  ProfileScreen,
-  SettingsStack,
+  EventsStack,
+  ProfileStack,
+  AboutStack,
 });

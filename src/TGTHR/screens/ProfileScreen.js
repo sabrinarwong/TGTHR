@@ -14,10 +14,16 @@ export default class ProfileScreen extends React.Component {
 
 	static navigationOptions = {
 		title: 'Profile',
-	};
+		headerTitleStyle: {
+			color: '#ffffff',
+		},
+		headerStyle: {
+			backgroundColor: '#9E5EE8',
+		},
+	  };
 	render() {
   	return(
-  		<ScrollView style={{marginTop: 20}}>
+		<ScrollView style={styles.container}>
     	<View style={styles.container}>
 
 					{/* display profile picture */}
@@ -55,13 +61,13 @@ export default class ProfileScreen extends React.Component {
 						<TouchableOpacity onPress={this.social1} style={styles.socialButton}>
 						   <Image style={styles.socialImage} source={require('../assets/images/profile/icons/whatsapp.png')}/>
 						</TouchableOpacity>
-					</View>
+				</View>
 
 			<TouchableOpacity onPress={this.onPress} style={styles.editProfile}>
 			   <Text style={styles.buttonText}> Edit Profile </Text>
 			</TouchableOpacity>
 			</View>
-    	</ScrollView>
+		</ScrollView>	
   	);
 	}
 }
@@ -115,26 +121,27 @@ const styles = StyleSheet.create({
 	},
 	editProfile:{
 		alignItems:'center',
-    borderWidth: 1,
-    padding: 20,
-    borderColor: 'black',
-    backgroundColor: 'blue',
-    borderRadius: 15,
-    marginTop: 60,
-    marginRight: 100,
-    marginLeft: 100,
+		borderWidth: 1,
+		padding: 10,
+		borderColor: 'black',
+    	// backgroundColor: 'blue',
+    	borderRadius: 7,
+		marginTop: 20,
+		marginLeft: 30,
+		marginRight: 30,
+		flex:1,
 	},
 	buttonText:{
 			fontSize: 22,
-			color: 'white',
+			color: 'black',
 	},
 	socialView:{
 		alignItems: 'center',
 		flexDirection: 'row',
+		justifyContent: 'space-evenly',
 	},
 	socialButton:{
-		position: 'relative',
-    padding: 10,
+		// position: 'relative',
 	},
 	socialImage:{
 		flex: 1,
