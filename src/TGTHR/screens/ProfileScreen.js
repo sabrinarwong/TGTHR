@@ -9,6 +9,7 @@ import {
 	Button,
 	ScrollView,
 } from 'react-native';
+import * as firebase from 'firebase';
 
 export default class ProfileScreen extends React.Component {
 
@@ -21,6 +22,11 @@ export default class ProfileScreen extends React.Component {
 			backgroundColor: '#9E5EE8',
 		},
 	  };
+
+	onSignoutPress = () => {
+		firebase.auth().signOut();
+	}
+	  
 	render() {
   	return(
 		<ScrollView style={styles.container}>
@@ -66,6 +72,8 @@ export default class ProfileScreen extends React.Component {
 			<TouchableOpacity onPress={this.onPress} style={styles.editProfile}>
 			   <Text style={styles.buttonText}> Edit Profile </Text>
 			</TouchableOpacity>
+			<Button title="Sign out" onPress={this.onSignoutPress}
+			/>
 			</View>
 		</ScrollView>	
   	);
