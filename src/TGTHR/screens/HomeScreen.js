@@ -9,10 +9,15 @@ import {
   View,
   Animated,
   Button,
+  SafeAreaView,
+  TextInput,
+  StatusBar,
+  Dimensions,
 } from 'react-native';
-import { WebBrowser } from 'expo';
+import TabBarIcon from '../components/TabBarIcon';
+import Category from './components/explore/Category';
 
-import { MonoText } from '../components/StyledText';
+const{height,width} = Dimensions.get('window');
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -31,178 +36,140 @@ export default class HomeScreen extends React.Component {
     }).start();
   }
 
+  componentWillMount(){
+    this.startHeaderHeight = 100 + StatusBar.currentHeight
+  }
+
   render() {
     const opacity = this.animated.interpolate({
       inputRange:[0,1],
       outputRange:[0,1]
     });
     return (
-
-
-      <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={require('../assets/images/robot-dev.png')}
-              style={styles.welcomeImage}
-            />
-            {/* for some reason, comments are like his so idk */}
-            {/* displays the tgthr logo with the 'welcomeImage' style specified below. */}
-          </View>
-
-          <View style={styles.getStartedContainer}>
-
-            {/*
-            {this._maybeRenderDevelopmentModeWarning()}
-            */}
-
-            {/*this.animate()*/}
-
-            <Text style={styles.getStartedText}>Welcome to </Text>
-            <Animated.Text style={[styles.tgthrMain, {backgroundColor: 'transparent'},{opacity}]}>
-              TGTHR
-            </Animated.Text>
-
-            {/*
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
+      <SafeAreaView style={styles.flex1}>
+        <View style={styles.flex1}>
+          <View style={styles.topBar}>
+            <View style={styles.topBarContents}>
+              <TabBarIcon name='md-search' />
+              <TextInput 
+                placeholder="Try 'Paris'"
+                placeholderTextColor="grey"
+                underlineColorAndroid="transparent"
+                style={styles.topBarText}
+              />
             </View>
-            */}
-            <Text style={styles.getStartedText}>
-              The unbetter way to meet.
-            </Text>
           </View>
+          <ScrollView style={{backgroundColor:'white'}}>
+            <View> 
+              <Text style={styles.headerText}>
+                What can we help you with, $USER$?
+              </Text>
+              <View style={{height:130, marginTop:20}}>
+                <ScrollView 
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}>
+                  <Category 
+                  imageUri={require('../assets/images/tgthr.png')}
+                  name="Home"
+                  />
 
-          <View style={styles.buttonMain}>
-          <Button title="I need help!" onPress={()=>this.animate()}/>
+                  <Category 
+                  imageUri={require('../assets/images/robot-dev.png')}
+                  name="not home"
+                  />
 
-          </View>
+                  <Category 
+                  imageUri={require('../assets/images/robot-prod.png')}
+                  name="yes haha"
+                  />
 
-          <View style={styles.buttonMain}>
-          <Button title="I need help!" color="green" onPress={()=>this.animate()}/>
+                  <Category 
+                  imageUri={require('../assets/images/tgthr.png')}
+                  name="Home"
+                  />
 
-          </View>
+                  <Category 
+                  imageUri={require('../assets/images/robot-dev.png')}
+                  name="not home"
+                  />
 
-          <View style={styles.buttonMain}>
-          <Button title="I need help!" color="purple" onPress={()=>this.animate()}/>
+                  <Category 
+                  imageUri={require('../assets/images/robot-prod.png')}
+                  name="yes haha"
+                  />
 
-          </View>
-          <View style={styles.buttonMain}>
-          <Button title="I need help!" color="green" onPress={()=>this.animate()}/>
+                </ScrollView>  
+              </View>
+              <View style={{marginTop:40, paddingHorizontal:20}}>
+                <Text style={{fontSize:24, fontWeight:'700'}}>
+                  Event of the Day
+                </Text>
+                <Text style={{fontWeight:'100',marginTop:10}}>
+                  Unique event hand picked daily by our staff
+                </Text>
 
-          </View>
-          <View style={styles.buttonMain}>
-          <Button title="I need help!" color="red" onPress={()=>this.animate()}/>
-
-          </View>
-          <View style={styles.buttonMain}>
-          <Button title="I need help!" color="green" onPress={()=>this.animate()}/>
-
-          </View>
-          <View style={styles.buttonMain}>
-          <Button title="I need help!" color="red" onPress={()=>this.animate()}/>
-
-          </View>
-          <View style={styles.buttonMain}>
-          <Button title="I need help!" onPress={()=>this.animate()}/>
-
-          </View>
-          <View style={styles.buttonMain}>
-          <Button title="I need help!" color="orange" onPress={()=>this.animate()}/>
-
-          </View>
-          <View style={styles.buttonMain}>
-          <Button title="I need help!" color="green" onPress={()=>this.animate()}/>
-
-          </View>
-          <View style={styles.buttonMain}>
-          <Button title="I need help!" color="orange" onPress={()=>this.animate()}/>
-
-          </View>
-          <View style={styles.buttonMain}>
-          <Button title="I need help!" onPress={()=>this.animate()}/>
-
-          </View>
-          <View style={styles.buttonMain}>
-          <Button title="I need help!" onPress={()=>this.animate()}/>
-
-          </View>
-
-
-
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={require('../assets/images/robot-dev.png')}
-              style={styles.welcomeImage}
-            />
-            {/* for some reason, comments are like his so idk */}
-            {/* displays the tgthr logo with the 'welcomeImage' style specified below. */}
-          </View>
-
-
-
-
-
-
-          {/*
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View>
-          */}
-        </ScrollView>
-
-
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>
-            Press a colored button to animate the text!
-          </Text>
-          {/*
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
-          */}
+                <View style={{width:width-40, height:200, marginTop:20}}>
+                <Image
+                  style={styles.staffPickImage}
+                  source={require('../assets/images/robot-dev.png')}
+                  />
+                </View>
+              </View>
+            </View>
+          </ScrollView>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
-
-  _maybeRenderDevelopmentModeWarning() {
-    if (__DEV__) {
-      const learnMoreButton = (
-        <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
-          Learn more
-        </Text>
-      );
-
-      return (
-        <Text style={styles.developmentModeText}>
-          Development mode is enabled, your app will be slower but you can use useful development
-          tools. {learnMoreButton}
-        </Text>
-      );
-    } else {
-      return (
-        <Text style={styles.developmentModeText}>
-          You are not in development mode, your app will run at full speed.
-        </Text>
-      );
-    }
-  }
-
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  };
-
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
 }
 
 const styles = StyleSheet.create({
+  staffPickImage:{
+    flex:1, 
+    height:null,
+    width:null,
+    resizeMode:'cover',
+    borderRadius:5,
+    borderBottomWidth:1,
+    borderColor:'#ddd',
+  },
+  headerText: {
+    fontSize:24,
+    fontWeight: '700',
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    backgroundColor: 'white',
+  },
+  topBarContents: {
+    flexDirection:'row',
+    padding: 10,
+    backgroundColor:'white', 
+    // marginHorizontal:20,
+    marginTop: StatusBar.currentHeight,
+    elevation:1,
+    shadowColor: 'black',
+    shadowOpacity: 0.2,
+    borderRadius:20,
+  },
+  topBarText: {
+    flex:1,
+    fontWeight:'700',
+    backgroundColor:'white',
+    marginLeft:10,
+  },
+  topBar: {
+    height:this.startHeaderHeight,
+    backgroundColor:'white',
+    borderBottomColor:'#ddd', 
+    borderBottomWidth:1,
+    padding:10,
+  },
+  backgroundWhite: {
+    backgroundColor: 'white',
+  },
+  flex1: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
