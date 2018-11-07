@@ -13,38 +13,42 @@ import {
   TextInput,
   StatusBar,
   Dimensions,
+  Alert,
 } from 'react-native';
+import * as firebase from 'firebase';
 import TabBarIcon from '../components/TabBarIcon';
 import Category from './components/explore/Category';
 
 const{height,width} = Dimensions.get('window');
 
 export default class HomeScreen extends React.Component {
+
+  
   static navigationOptions = {
     header: null,
   };
 
   constructor(){
     super();
-    this.animated = new Animated.Value(0);
-  }
-
-  animate(){
-    Animated.timing(this.animated,{
-      toValue:1,
-      duration:1000,
-    }).start();
+    console.ignoredYellowBox = [
+      'Setting a timer'
+    ];  
+    this.database = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/name'); 
+    this.state = {
+      name: ''
+    }
   }
 
   componentWillMount(){
-    this.startHeaderHeight = 100 + StatusBar.currentHeight
+    this.startHeaderHeight = 100 + StatusBar.currentHeight;
+    this.database.on('value', snap => {
+      this.setState({
+        name: snap.val()
+      });
+    });
   }
 
   render() {
-    const opacity = this.animated.interpolate({
-      inputRange:[0,1],
-      outputRange:[0,1]
-    });
     return (
       <SafeAreaView style={styles.flex1}>
         <View style={styles.flex1}>
@@ -62,8 +66,9 @@ export default class HomeScreen extends React.Component {
           <ScrollView style={{backgroundColor:'white'}}>
             <View> 
               <Text style={styles.headerText}>
-                What can we help you with, $USER$?
+                What can we help you with, {this.state.name}?
               </Text>
+              
               <View style={{height:130, marginTop:20}}>
                 <ScrollView 
                   horizontal={true}
