@@ -18,6 +18,7 @@ import {
 import * as firebase from 'firebase';
 import TabBarIcon from '../components/TabBarIcon';
 import Category from './components/explore/Category';
+import Events from './components/explore/Events';
 
 const{height,width} = Dimensions.get('window');
 
@@ -34,8 +35,10 @@ export default class HomeScreen extends React.Component {
       'Setting a timer'
     ];  
     this.database = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/name'); 
+    this.databaseImg = firebase.database().ref().child('/images/img1'); 
     this.state = {
-      name: ''
+      name: '',
+      img1: ''
     }
   }
 
@@ -44,6 +47,11 @@ export default class HomeScreen extends React.Component {
     this.database.on('value', snap => {
       this.setState({
         name: snap.val()
+      });
+    });
+    this.databaseImg.on('value', snap => {
+      this.setState({
+        img1: snap.val()
       });
     });
   }
@@ -72,35 +80,37 @@ export default class HomeScreen extends React.Component {
               <View style={{height:130, marginTop:20}}>
                 <ScrollView 
                   horizontal={true}
+                  style={{marginRight:20}}
                   showsHorizontalScrollIndicator={false}>
                   <Category 
-                  imageUri={require('../assets/images/tgthr.png')}
-                  name="Home"
+                  // imageUri={require('../assets/images/tgthr.png')}
+                  imageUri={{uri: 'https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fparis.png?alt=media&token=e7bbb93b-650c-4e82-9b7d-34aafc066bc7'}}
+                  name="Explore"
                   />
 
                   <Category 
-                  imageUri={require('../assets/images/robot-dev.png')}
-                  name="not home"
+                  imageUri={{uri: 'https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fdining.jpg?alt=media&token=e4cf3b5a-d114-401f-9cd9-d03dd9616551'}}
+                  name="Dining"
+                  />
+                  
+                  <Category 
+                  imageUri={{uri: 'https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fnearby-icon-3.jpg?alt=media&token=3e2eef3f-a38c-4d5b-a05c-6bc2c84eaa76'}}
+                  name="Nearby"
                   />
 
                   <Category 
-                  imageUri={require('../assets/images/robot-prod.png')}
-                  name="yes haha"
+                  imageUri={{uri: 'https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fhiking.jpg?alt=media&token=fce4494d-1e52-403d-a915-7fee5aa476b3'}}
+                  name="Outdoors"
                   />
 
                   <Category 
-                  imageUri={require('../assets/images/tgthr.png')}
-                  name="Home"
+                  imageUri={{uri: 'https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Ftabletopgaming.jpg?alt=media&token=80a88e4b-5eb0-4dc4-8ed5-aa8e71c422d5'}}
+                  name="Tabletop Gaming"
                   />
 
                   <Category 
-                  imageUri={require('../assets/images/robot-dev.png')}
-                  name="not home"
-                  />
-
-                  <Category 
-                  imageUri={require('../assets/images/robot-prod.png')}
-                  name="yes haha"
+                  imageUri={{uri: 'https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fnightlife.jpg?alt=media&token=a511e0f8-da52-4660-b874-f1b7c4f463d3'}}
+                  name="Night Life"
                   />
 
                 </ScrollView>  
@@ -110,14 +120,50 @@ export default class HomeScreen extends React.Component {
                   Event of the Day
                 </Text>
                 <Text style={{fontWeight:'100',marginTop:10}}>
-                  Unique event hand picked daily by our staff
+                  Unique events, hand picked daily by our staff
                 </Text>
 
                 <View style={{width:width-40, height:200, marginTop:20}}>
                 <Image
                   style={styles.staffPickImage}
-                  source={require('../assets/images/robot-dev.png')}
+                  source={{uri: 'https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fkayaking.jpg?alt=media&token=8e2112b1-5b31-4683-b9e9-e290fb9e9460'}}
                   />
+                </View>
+              </View>
+              <View style={{marginTop:40, paddingHorizontal:20}}>
+                <Text style={{fontSize:24, fontWeight:'700'}}>
+                  The BTTR TGTHR Blog
+                </Text>
+                <Text style={{fontWeight:'100',marginTop:10}}>
+                  Top tier articles written by the best TGTHR has to offer
+                </Text>
+                <View style={{width:width-40, height:200, marginTop:20}}>
+                <Image
+                  style={styles.staffPickImage}
+                  source={{uri: 'https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fdesk.PNG?alt=media&token=3d7b9a5f-119c-48bb-9732-5411bd53af83'}}
+                  />
+                </View>
+              </View>  
+              <View style={{ marginTop: 40}} >
+                <Text style={{fontSize:24, fontWeight:'700', paddingHorizontal:20}}>
+                  Nearby Events
+                </Text>
+                <View style={{paddingHorizontal:20, marginVertical:20, flexDirection:'row', flexWrap:'wrap', justifyContent:'space-between' }}>
+                  <Events width={width}
+                    image="https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Ftenrens.jpg?alt=media&token=9e430f58-590c-4c2f-ad9c-3c546033232b"
+                    title="Ten Ren's secret meetup"
+                    location="Ten Ren's Riverside"
+                    date="November 22nd" />
+                  <Events width={width}
+                    image="https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fucrbelltower.jpg?alt=media&token=9fa28a11-c81c-41ac-822b-4251ef4ca95b"
+                    title="Cry about finals"
+                    location="UCR bell tower"
+                    date="December 7th" />
+                  <Events width={width}
+                    image="https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fnetflix.png?alt=media&token=0d5a11a2-4f63-41bf-8493-baae39596efc"
+                    title="Procrastinate CS180 project"
+                    location="UCR WCH"
+                    date="November 9th" />
                 </View>
               </View>
             </View>
@@ -129,6 +175,7 @@ export default class HomeScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  
   staffPickImage:{
     flex:1, 
     height:null,
