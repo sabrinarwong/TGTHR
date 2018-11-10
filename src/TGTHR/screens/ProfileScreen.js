@@ -34,7 +34,7 @@ export default class ProfileScreen extends React.Component {
 	    this.state = {
 	      name: ''
 	    }
-	    this.database = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/email'); 
+	    this.database2 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/email'); 
 	    this.state = {
 	      email: ''
 	    }
@@ -45,6 +45,10 @@ export default class ProfileScreen extends React.Component {
 		this.database.on('value', snap => {
 		  this.setState({
 		    name: snap.val(),
+		  });
+		});
+		this.database2.on('value', snap => {
+		  this.setState({
 		    email: snap.val(),
 		  });
 		});
