@@ -1,5 +1,4 @@
 import React from 'react';
-// import ProfileImage from '../assets/images/profile/'
 import {
 	StyleSheet,
 	View,
@@ -7,8 +6,11 @@ import {
 	Text,
 	TouchableOpacity,
 	Button,
+	StatusBar,
 	ScrollView,
 } from 'react-native';
+// import { createStackNavigator } from 'react-navigation';
+
 import * as firebase from 'firebase';
 
 export default class ProfileScreen extends React.Component {
@@ -21,7 +23,36 @@ export default class ProfileScreen extends React.Component {
 		headerStyle: {
 			backgroundColor: '#9E5EE8',
 		},
-	  };
+	};
+
+	constructor(){
+	    super();
+	    console.ignoredYellowBox = [
+	      'Setting a timer'
+	    ];  
+	    this.database = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/name'); 
+	    this.state = {
+	      name: ''
+	    }
+	    this.database = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/email'); 
+	    this.state = {
+	      email: ''
+	    }
+	}
+
+	componentWillMount(){
+		this.startHeaderHeight = 100 + StatusBar.currentHeight;
+		this.database.on('value', snap => {
+		  this.setState({
+		    name: snap.val(),
+		    email: snap.val(),
+		  });
+		});
+	}
+
+	onEditProfilePress = () => {
+		this.props.navigation.navigate("editProfile");
+	}
 
 	onSignoutPress = () => {
 		firebase.auth().signOut();
@@ -31,54 +62,51 @@ export default class ProfileScreen extends React.Component {
   	return(
 		<ScrollView style={styles.container}>
     	<View style={styles.container}>
+				{/* display profile picture */}
+			<View style={styles.profileContainer}>
+				<Image source={require('../assets/images/profile/profile.jpg')} style={styles.profileImage}/>
+				<View>
+					<Text style={styles.nameText}> {this.state.name} {/*firstName lastName */} </Text>
+						<Text style={{marginLeft: 20, fontSize: 19}}> Riverside, CA {/* insert user information */} </Text>
+					</View>
+   			</View>
 
-					{/* display profile picture */}
-    			<View style={styles.profileContainer}>
-    				<Image source={require('../assets/images/profile/profile.jpg')} style={styles.profileImage}/>
-    				<View>
-    					<Text style={styles.nameText}> Robert Richard {/*firstName lastName */} </Text>
-  						<Text style={{marginLeft: 20, fontSize: 19}}> Riverside, CA {/* insert user information */} </Text>
-  					</View>
-       		</View>
+				{/* display user bio */}
+			<View style={styles.informationContainer}>
+					<Text style={styles.bioText}><Text>Bio: </Text>
+					Spent high school summers managing jump ropes in Fort Walton Beach, FL. Spent college summers promoting wooden trains for no pay. Had a brief career getting my feet wet with easy-bake-ovens in Atlantic City, NJ.
+					</Text>
 
-					{/* display user bio */}
-    			<View style={styles.informationContainer}>
-						<Text style={styles.bioText}><Text>Bio: </Text>
-						Spent high school summers managing jump ropes in Fort Walton Beach, FL. Spent college summers promoting wooden trains for no pay. Had a brief career getting my feet wet with easy-bake-ovens in Atlantic City, NJ.
-						</Text>
-
-					{/* display profile information */}
-    				<Text style={styles.infoText}> Email: bob@google.com {/* insert user information */}</Text>
-    			</View>
-
-					{/* display social media connected */}
-					{/* FIX: if connected then full color.
-						if not then grey tone, */}
-    			<View style={styles.socialView}>
-						<TouchableOpacity onPress={this.social1} style={styles.socialButton}>
-						   <Image style={styles.socialImage} source={require('../assets/images/profile/icons/facebook.png')}/>
-						</TouchableOpacity>
-						<TouchableOpacity onPress={this.social1} style={styles.socialButton}>
-						   <Image style={styles.socialImage} source={require('../assets/images/profile/icons/google-plus.png')}/>
-						</TouchableOpacity>
-						<TouchableOpacity onPress={this.social1} style={styles.socialButton}>
-						   <Image style={styles.socialImage} source={require('../assets/images/profile/icons/twitter.png')}/>
-						</TouchableOpacity>
-						<TouchableOpacity onPress={this.social1} style={styles.socialButton}>
-						   <Image style={styles.socialImage} source={require('../assets/images/profile/icons/whatsapp.png')}/>
-						</TouchableOpacity>
-				</View>
-
-			<TouchableOpacity onPress={this.onPress} style={styles.editProfile}>
-			   <Text style={styles.buttonText}> Edit Profile </Text>
-			</TouchableOpacity>
-			<Button title="Sign out" onPress={this.onSignoutPress}
-			/>
+				{/* display profile information */}
+				<Text style={styles.infoText}> Email: {this.state.email} {/* insert user information */}</Text>
 			</View>
+
+				{/* display social media connected */}
+				{/* FIX: if connected then full color.
+					if not then grey tone, */}
+			<View style={styles.socialView}>
+					<TouchableOpacity onPress={this.social1}>
+					   <Image style={styles.socialImage} source={require('../assets/images/profile/icons/facebook.png')}/>
+					</TouchableOpacity>
+					<TouchableOpacity onPress={this.social1} style={styles.socialButton}>
+					   <Image style={styles.socialImage} source={require('../assets/images/profile/icons/google-plus.png')}/>
+					</TouchableOpacity>
+					<TouchableOpacity onPress={this.social1} style={styles.socialButton}>
+					   <Image style={styles.socialImage} source={require('../assets/images/profile/icons/twitter.png')}/>
+					</TouchableOpacity>
+					<TouchableOpacity onPress={this.social1} style={styles.socialButton}>
+					   <Image style={styles.socialImage} source={require('../assets/images/profile/icons/whatsapp.png')}/>
+					</TouchableOpacity>
+			</View>
+
+			<Button title="Edit Profile" onPress={this.onEditProfilePress} />
+			<Button title="Sign out" onPress={this.onSignoutPress} />
+		</View>
 		</ScrollView>	
   	);
 	}
 }
+
 
 const styles = StyleSheet.create({
 	container:{
@@ -139,23 +167,18 @@ const styles = StyleSheet.create({
 		marginRight: 30,
 		flex:1,
 	},
-	buttonText:{
-			fontSize: 22,
-			color: 'black',
-	},
 	socialView:{
 		alignItems: 'center',
 		flexDirection: 'row',
 		justifyContent: 'space-evenly',
-	},
-	socialButton:{
-		// position: 'relative',
+		marginTop: 30,
+		marginBottom: 30,
 	},
 	socialImage:{
 		flex: 1,
-    width: 50,
-    height: 50,
-    alignItems: 'center',
+		width: 50,
+		height: 50,
+		alignItems: 'center',
 		resizeMode: 'contain',
 	},
 });
