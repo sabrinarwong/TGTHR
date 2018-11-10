@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import EventsScreen from '../screens/EventsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import editProfileScreen from './../screens/components/edits/editProfileScreen';
 import AboutScreen from '../screens/AboutScreen';
 import MapsScreen from '../screens/MapsScreen';
 
@@ -39,6 +40,7 @@ EventsStack.navigationOptions = {
 
 const ProfileStack = createStackNavigator({
   Profile: ProfileScreen,
+  editProfile: editProfileScreen,
 });
 
 ProfileStack.navigationOptions = {
