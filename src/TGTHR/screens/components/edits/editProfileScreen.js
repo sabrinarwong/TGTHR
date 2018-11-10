@@ -24,16 +24,34 @@ export default class editProfileScreen extends React.Component {
 	    this.state = {
 	      name: ''
 	    }
-	    this.database = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/email'); 
+	    this.database2 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/email'); 
 	    this.state = {
 	      email: ''
 	    }
-	    this.database = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/password'); 
+	    this.database3 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/password'); 
 	    this.state = {
 	      password: ''
 	    }
 	}
-	
+	componentWillMount(){
+		this.startHeaderHeight = 100 + StatusBar.currentHeight;
+		this.database.on('value', snap => {
+		  this.setState({
+		    name: snap.val(),
+		  });
+		});
+		this.database2.on('value', snap => {
+		  this.setState({
+		    email: snap.val(),
+		  });
+		});
+		this.database3.on('value', snap => {
+		  this.setState({
+		    password: snap.val(),
+		  });
+		});
+	}
+
     onSaveProfilePress = () => {
         if(firebase.auth().currentUser.name !== this.state.name) {
 			changeName = (currentPassword, newName) => {
@@ -65,10 +83,10 @@ export default class editProfileScreen extends React.Component {
 			  }).catch((error) => { console.log(error); });
 			}
 		}
-		if(this.state.password !== this.state.passwordConfirm) {
-            Alert.alert("Passwords do not match");
-            return;
-        }
+		// if(this.state.password !== this.state.passwordConfirm) {
+  //           Alert.alert("Passwords do not match");
+  //           return;
+  //       }
 	    this.props.navigation.navigate("Main");
     }
 
