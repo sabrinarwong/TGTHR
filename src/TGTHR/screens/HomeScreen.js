@@ -35,10 +35,8 @@ export default class HomeScreen extends React.Component {
       'Setting a timer'
     ];  
     this.database = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/name'); 
-    this.databaseImg = firebase.database().ref().child('/images/img1'); 
     this.state = {
       name: '',
-      img1: ''
     }
   }
 
@@ -49,14 +47,11 @@ export default class HomeScreen extends React.Component {
         name: snap.val()
       });
     });
-    this.databaseImg.on('value', snap => {
-      this.setState({
-        img1: snap.val()
-      });
-    });
   }
 
   render() {
+    
+
     return (
       <SafeAreaView style={styles.flex1}>
         <View style={styles.flex1}>
@@ -146,7 +141,7 @@ export default class HomeScreen extends React.Component {
               </View>  
               <View style={{ marginTop: 40}} >
                 <Text style={{fontSize:24, fontWeight:'700', paddingHorizontal:20}}>
-                  Nearby Events
+                  Nearby Events {this.state.img1}
                 </Text>
                 <View style={{paddingHorizontal:20, marginVertical:20, flexDirection:'row', flexWrap:'wrap', justifyContent:'space-between' }}>
                   <Events width={width}
