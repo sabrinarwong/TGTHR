@@ -1,0 +1,47 @@
+
+sprint 3.1 TO DO BY 11/16
+
+Brandon - event data. Ability to post event from the app that saves to
+firebase in the location /events/
+(set up demo one to see layout)
+See first codeblock under here:
+https://firebase.google.com/docs/database/web/read-and-write#update_specific_fields
+Include title, event host, timestamp, location (coordinates? work w apollo),
+category, description for now.
+category like "outdoors" "food" .. (maybe steal from here: https://www.meetup.com/topics/ )
+(Think about uploading an image for event - this is difficult though)
+may be helpful: https://www.youtube.com/watch?v=ASF7zvlDCFk
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+
+Sabrina - profile bio. Ability to edit profile bio. Bio should save to filebase,
+under /users/$uid/bio. Add functionality to whatsapp,facebook... buttons
+
+Apollo - fix the 'about' tab contents to reflect correct information. 
+Ie. version #, description, technologies used, app icon (also for splash screen)
+"Built by Team Rocket"... etc
+
+Ryan - fix login/signup/forgot password screens, uniform look w apollos code
+
+
+sprint 3.2 TO DO BY 11/22 (finished product) (1 day leeway in case issues)
+
+Brandon - event screen. List events on "Events" tab, with their description
+title, host and image. Clickable. 
+When clicked on, goes to event listing. (Work with Ryan)
+Event listing lists important information.(stuff above)
+May be useful: https://www.youtube.com/watch?v=3oySgymEdqI
+
+Sabrina - upload and display correct profile picture. Involves linking image to uid
+in firebase.
+May be helpful: https://www.youtube.com/watch?v=KkZckepfm2Q
+Work with Brandon if he can't figure out how to upload/fetch images.
+
+Apollo - Fetch events from firebase under /events/ and display them on the 
+map as the map stands now.
+
+Ryan - event listing page.
+rsvp to event that somebody else posted (FROM EVENT LISTING).
+Would have to have event data up on 
+firebase, posted by somebody else. /events/ Then would create a new branch 
+/events/$eventID/rspv with listings of $uidOfRSPV 
+Homescreen functionality? Link eventlisting to homescreen.
