@@ -38,7 +38,7 @@ export default class LoginScreen extends React.Component {
                 onChangeText={(text) => { this.setState({email: text}) } }
                 />
             <Text>Password</Text>
-            <TextInput style={{width:200, height:40, borderWidth:1}}
+            <TextInput secureTextEntry={true} style={{width:200, height:40, borderWidth:1}}
                 value={this.state.password}
                 onChangeText={(text) => { this.setState({password: text}) }}
                 />    

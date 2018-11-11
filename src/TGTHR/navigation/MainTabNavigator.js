@@ -6,7 +6,9 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import EventsScreen from '../screens/EventsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import editProfileScreen from './../screens/components/edits/editProfileScreen';
 import AboutScreen from '../screens/AboutScreen';
+import MapsScreen from '../screens/MapsScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -38,6 +40,7 @@ EventsStack.navigationOptions = {
 
 const ProfileStack = createStackNavigator({
   Profile: ProfileScreen,
+  editProfile: editProfileScreen,
 });
 
 ProfileStack.navigationOptions = {
@@ -46,6 +49,20 @@ ProfileStack.navigationOptions = {
     <TabBarIcon
       focused={focused}
       name={'md-person'}
+    />
+  ),
+};
+
+const MapsStack = createStackNavigator({
+  Maps: MapsScreen,
+});
+
+MapsStack.navigationOptions = {
+  tabBarLabel: 'Map',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={'md-map'}
     />
   ),
 };
@@ -67,6 +84,7 @@ AboutStack.navigationOptions = {
 export default createBottomTabNavigator({
   HomeStack,
   EventsStack,
+  MapsStack,
   ProfileStack,
   AboutStack,
 });
