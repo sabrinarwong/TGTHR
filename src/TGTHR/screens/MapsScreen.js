@@ -3,6 +3,15 @@ import { StyleSheet, Text, View} from 'react-native'
 import MapView from 'react-native-maps';
 
 export default class MapsScreen extends React.Component {
+	static navigationOptions = {
+		title: 'Map',
+		headerTitleStyle: {
+			color: '#ffffff',
+		},
+		headerStyle: {
+			backgroundColor: '#9E5EE8',
+		},
+	  };
 	render() {
 		return (
 			
