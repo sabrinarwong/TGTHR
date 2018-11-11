@@ -1,62 +1,6 @@
 import React from 'react';
-import { ScrollView, StyleSheet, SectionList, AppRegistry, Text, View, RefreshControl } from 'react-native';
-import { ExpoLinksView } from '@expo/samples';
+import { ScrollView, StyleSheet, SectionList, AppRegistry, Text, View, RefreshControl, Header, SectionListItem } from 'react-native';
 import { sectionListData } from '../data/sectionListData';
-
-// export class SectionListItem {
-//     render() {
-//
-//         return (
-//             <View style={{
-//                 flex: 1,
-//                 flexDirection: 'column',
-//                 backgroundColor: '#fff'
-//             }}>
-//                 <Text style={{
-//                     marginTop: 10,
-//                     marginHorizontal: 10,
-//                     fontSize: 16,
-//                     fontWeight: 'bold',
-//                     color: '#a4adbc' //gray
-//                 }}>{this.props.item.posterName}
-//                 </Text>
-//                 <Text style={{
-//                     marginVertical: 5,
-//                     marginHorizontal: 10,
-//                     fontSize: 17,
-//                     fontWeight: 'bold',
-//                 }}>{this.props.item.eventName}
-//                 </Text>
-//                 <Text style={{
-//                     marginBottom: 10,
-//                     marginHorizontal: 10,
-//                     fontSize: 15,
-//                 }}>{this.props.item.description}
-//                 </Text>
-//             </View>
-//         );
-//     }
-// }
-//
-// export class SectionHeader {
-//
-//     render() {
-//         return (
-//             <View style={{
-//                 flex: 1,
-//                 backgroundColor: 'rgba(247, 247, 247, 1.0)',
-//             }}>
-//                 <Text style={{
-//                     marginVertical: 10,
-//                     marginHorizontal: 10,
-//                     fontSize: 18,
-//                     fontWeight: 'bold',
-//                 }}>{this.props.section.title}
-//                 </Text>
-//             </View>
-//         )
-//     }
-// }
 
 export default class EventsScreen extends React.Component {
   static navigationOptions = {
@@ -68,19 +12,32 @@ export default class EventsScreen extends React.Component {
           backgroundColor: '#9E5EE8',
       },
     };
-  state = {
-      data: [],
-      refreshing: false
-  };
+
+    constructor(props) {
+        super(props);
+        this.state = { 
+            refreshing: false,
+            data: [],
+            //isFetching: false,
+        };
+    }
+
   fetchData = async () => {
 
   };
-  _onRefresh() {
+  onRefresh() {
       this.setState({ refreshing: true });
       this.fetchData().then(() => {
           this.setState({ refreshing: false })
       });
   }
+  /*handleRefresh = () => {
+      this.setState(
+          {
+              refreshing: true,
+          }
+      );
+  };*/
   renderSeparator = () => {
       return (
           <View
@@ -97,33 +54,57 @@ export default class EventsScreen extends React.Component {
 
   render() {
     return (
-      // <ScrollView style={styles.container}>
-      //   {/* Go ahead and delete ExpoLinksView and replace it with your
-      //      * content, we just wanted to provide you with some helpful links */}
-      //   <SectionList
-      //       // renderItem={({ item, index }) => {
-      //       //     return (<SectionListItem item={item} index={index} >
-      //       //
-      //       //     </SectionListItem>);
-      //       // }}
-      //       // renderSectionHeader={({ section }) => {
-      //       //     return (<SectionHeader section={section} />);
-      //       // }}
-      //       sections={sectionListData}
-      //       keyExtractor={(item, index) => item.eventName}
-      //       ItemSeparatorComponent={this.renderSeparator}
-      //   />
-      //   refreshControl = {
-      //       <RefreshControl
-      //           refreshing={this.state.refreshing}
-      //           onRefresh={this._onRefresh.bind(this)}
-      //       />
-      //   }
-      // </ScrollView>
-      <View>
-        <Text>
-        placeholder text
-        </Text>
+      <View style={styles.container}>
+        <SectionList
+            renderSectionHeader={({ section }) => 
+                    <View style={{
+                        flex: 1,
+                        backgroundColor: 'rgba(247, 247, 247, 1.0)',
+                    }}>
+                        <Text style={{
+                            marginVertical: 10,
+                            marginHorizontal: 10,
+                            fontSize: 18,
+                            fontWeight: 'bold',
+                        }}>{section.title}
+                        </Text>
+                    </View>
+            }
+            renderItem={({ item }) => 
+                    <View style={{
+                        flex: 1,
+                        flexDirection: 'column',
+                        backgroundColor: '#fff'
+                    }}>
+                        <Text style={{
+                            marginTop: 10,
+                            marginHorizontal: 10,
+                            fontSize: 16,
+                            fontWeight: 'bold',
+                            color: '#a4adbc' //gray
+                        }}>{item.posterName}
+                        </Text>
+                        <Text style={{
+                            marginVertical: 5,
+                            marginHorizontal: 10,
+                            fontSize: 17,
+                            fontWeight: 'bold',
+                        }}>{item.eventName}
+                        </Text>
+                        <Text style={{
+                            marginBottom: 10,
+                            marginHorizontal: 10,
+                            fontSize: 15,
+                        }}>{item.description}
+                        </Text>
+                    </View>
+            }
+            sections={sectionListData}
+            keyExtractor={(item, index) => item.eventName}
+            ItemSeparatorComponent={this.renderSeparator}
+            refreshing={this.state.refreshing}
+            onRefresh={() => this.onRefresh}
+        />
       </View>
     );
   }
@@ -139,4 +120,7 @@ const styles = StyleSheet.create({
       flex: 1,
       height: StyleSheet.hairlineWidth,
   },
+  SectionHeader: {
+
+  }
 });
