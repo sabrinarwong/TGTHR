@@ -38,6 +38,14 @@ export default class ProfileScreen extends React.Component {
 	    this.state = {
 	      email: ''
 	    }
+	    this.database3 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/bio'); 
+	    this.state = {
+	      bio: ''
+	    }
+	    this.database4 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/location'); 
+	    this.state = {
+	      location: ''
+	    }
 	}
 
 	componentWillMount(){
@@ -50,6 +58,17 @@ export default class ProfileScreen extends React.Component {
 		this.database2.on('value', snap => {
 		  this.setState({
 		    email: snap.val(),
+		  });
+		});
+		this.startHeaderHeight = 100 + StatusBar.currentHeight;
+		this.database3.on('value', snap => {
+		  this.setState({
+		    bio: snap.val(),
+		  });
+		});
+		this.database4.on('value', snap => {
+		  this.setState({
+		    location: snap.val(),
 		  });
 		});
 	}
@@ -71,15 +90,14 @@ export default class ProfileScreen extends React.Component {
 				<Image source={require('../assets/images/profile/profile.jpg')} style={styles.profileImage}/>
 				<View>
 					<Text style={styles.nameText}> {this.state.name} {/*firstName lastName */} </Text>
-						<Text style={{marginLeft: 20, fontSize: 19}}> Riverside, CA {/* insert user information */} </Text>
+						<Text style={{marginLeft: 20, fontSize: 19}}>{this.state.location}{/* insert user information */} </Text>
 					</View>
    			</View>
 
 				{/* display user bio */}
 			<View style={styles.informationContainer}>
-					<Text style={styles.bioText}><Text>Bio: </Text>
-					Spent high school summers managing jump ropes in Fort Walton Beach, FL. Spent college summers promoting wooden trains for no pay. Had a brief career getting my feet wet with easy-bake-ovens in Atlantic City, NJ.
-					</Text>
+					<Text style={styles.bioText}><Text>Bio: 
+					</Text> {this.state.bio}</Text>
 
 				{/* display profile information */}
 				<Text style={styles.infoText}> Email: {this.state.email} {/* insert user information */}</Text>
