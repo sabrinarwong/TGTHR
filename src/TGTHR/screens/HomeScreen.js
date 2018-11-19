@@ -5,15 +5,16 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableWithoutFeedback,
   TouchableOpacity,
   View,
-  Animated,
-  Button,
   SafeAreaView,
   TextInput,
   StatusBar,
   Dimensions,
   Alert,
+  Button,
+  Linking,
 } from 'react-native';
 import * as firebase from 'firebase';
 import TabBarIcon from '../components/TabBarIcon';
@@ -49,6 +50,10 @@ export default class HomeScreen extends React.Component {
     });
   }
 
+  onNearbyPress = () => {
+		this.props.navigation.navigate("Maps");
+	}
+
   render() {
     
 
@@ -66,6 +71,7 @@ export default class HomeScreen extends React.Component {
               />
             </View>
           </View>
+
           <ScrollView style={{backgroundColor:'white'}}>
             <View> 
               <Text style={styles.headerText}>
@@ -88,10 +94,12 @@ export default class HomeScreen extends React.Component {
                   name="Dining"
                   />
                   
-                  <Category 
-                  imageUri={{uri: 'https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fnearby-icon-3.jpg?alt=media&token=3e2eef3f-a38c-4d5b-a05c-6bc2c84eaa76'}}
-                  name="Nearby"
-                  />
+                  <TouchableOpacity onPress={ this.onNearbyPress }>
+                    <Category 
+                    imageUri={{uri: 'https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fnearby-icon-3.jpg?alt=media&token=3e2eef3f-a38c-4d5b-a05c-6bc2c84eaa76'}}
+                    name="Nearby"
+                    />
+                  </TouchableOpacity>  
 
                   <Category 
                   imageUri={{uri: 'https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fhiking.jpg?alt=media&token=fce4494d-1e52-403d-a915-7fee5aa476b3'}}
@@ -132,12 +140,14 @@ export default class HomeScreen extends React.Component {
                 <Text style={{fontWeight:'100',marginTop:10}}>
                   Top tier articles written by the best TGTHR has to offer
                 </Text>
-                <View style={{width:width-40, height:200, marginTop:20}}>
-                <Image
-                  style={styles.staffPickImage}
-                  source={{uri: 'https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fdesk.PNG?alt=media&token=3d7b9a5f-119c-48bb-9732-5411bd53af83'}}
-                  />
-                </View>
+                <TouchableWithoutFeedback onPress={ ()=> Linking.openURL('https://ryanyuzuki.com/tgthr') }>
+                  <View style={{width:width-40, height:200, marginTop:20}}>
+                  <Image
+                    style={styles.staffPickImage}
+                    source={{uri: 'https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fdesk.PNG?alt=media&token=3d7b9a5f-119c-48bb-9732-5411bd53af83'}}
+                    />
+                  </View>
+                </TouchableWithoutFeedback>
               </View>  
               <View style={{ marginTop: 40}} >
                 <Text style={{fontSize:24, fontWeight:'700', paddingHorizontal:20}}>

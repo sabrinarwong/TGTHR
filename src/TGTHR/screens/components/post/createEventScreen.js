@@ -84,6 +84,8 @@ export default class createEventScreen extends React.Component {
 
         firebase.database().ref().update(updates);
 
+        Alert.alert("Event sucessfully created");
+
         this.props.navigation.navigate("Events"); //go back to Events page
     }
 
