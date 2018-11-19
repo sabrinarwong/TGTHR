@@ -1,6 +1,17 @@
 import React from 'react';
-import { ScrollView, StyleSheet, SectionList, AppRegistry, Text, View, RefreshControl, Header, SectionListItem } from 'react-native';
+import { 
+    ScrollView, 
+    StyleSheet, 
+    SectionList, 
+    AppRegistry, 
+    Text, View, 
+    RefreshControl, 
+    Header, 
+    SectionListItem, 
+    Button 
+} from 'react-native';
 import { sectionListData } from '../data/sectionListData';
+import * as firebase from 'firebase';
 
 export default class EventsScreen extends React.Component {
   static navigationOptions = {
@@ -50,11 +61,18 @@ export default class EventsScreen extends React.Component {
           />
       );
   };
-
+//   onCreateEventPress = () => {
+//       this.props.navigation.navigate("createEvent");
+//   }
 
   render() {
     return (
       <View style={styles.container}>
+        <Button
+            title="New Event"
+            color='#9E5EE8'
+            onPress={() => this.props.navigation.navigate('createEvent')}
+        />
         <SectionList
             renderSectionHeader={({ section }) => 
                     <View style={{
