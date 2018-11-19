@@ -2,11 +2,9 @@ import React from 'react';
 import {
 	StyleSheet,
 	View,
-	Image,
 	Text,
-	TouchableOpacity,
-	Button,
-	ScrollView,
+	TouchableHighlight,
+	Alert,
 	StatusBar,
 	TextInput,
 	KeyboardAvoidingView,
@@ -31,7 +29,12 @@ export default class createEventScreen extends React.Component {
           ];
         this.database = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/name'); 
 	    this.state = {
-	      host: ''
+          host: '',
+          title: '',
+          category: '',
+          date: '',
+          location: '',
+          description: '',
 	    }
     }
 
@@ -45,6 +48,24 @@ export default class createEventScreen extends React.Component {
     }
     
     onCreateEventPress = () => {
+
+        if(this.state.title == '') {
+            Alert.alert("Title cannot be blank!");
+            return;
+        }
+        if(this.state.category == '') {
+            Alert.alert("Category cannot be blank!");
+            return;
+        }
+        if(this.state.date == '') {
+            Alert.alert("Date cannot be blank!");
+            return;
+        }
+        if(this.state.location == '') {
+            Alert.alert("Location cannot be blank!");
+            return;
+        }
+
         var eventData = {
             host: this.state.host,
             title: this.state.title,
@@ -68,65 +89,130 @@ export default class createEventScreen extends React.Component {
 
     render() {
         return(
-            // <Text>
-            //     test
-            // </Text>
-			<ScrollView style ={styles.container}>
-			<KeyboardAvoidingView behavior="padding" enabled>
-            <View style={{/*, alignItems:"left"*/}}>
-                <Button
-                    title="Create"
-                    color='#9E5EE8'
-                    onPress={this.onCreateEventPress}
-                />
-                <TextInput style={{height:60, borderWidth:1}}
-                    placeholder="Title"
-                    placeholderTextColor="grey"
-                    underlineColorAndroid="transparent"
-                    value={this.state.title}
-                    onChangeText={(text) => { this.setState({title: text}) } }
-	                />
-                <TextInput style={{height:60, borderWidth:1}}
-                    placeholder="Category"
-                    placeholderTextColor="grey"
-                    underlineColorAndroid="transparent"
-                    value={this.state.category}
-                    onChangeText={(text) => { this.setState({category: text}) } }
-	                />    
-                <TextInput style={{height:60, borderWidth:1}}
-                    placeholder="Date"
-                    placeholderTextColor="grey"
-                    underlineColorAndroid="transparent"
-                    value={this.state.date}
-                    onChangeText={(text) => { this.setState({date: text}) } }
-	                />
-                <TextInput style={{height:60, borderWidth:1}}
-                    placeholder="Location"
-                    placeholderTextColor="grey"
-                    underlineColorAndroid="transparent"
-                    value={this.state.location}
-                    onChangeText={(text) => { this.setState({location: text}) } }
-	                />        
-                <TextInput style={{height:60}}
-                    placeholder="Description"
-                    placeholderTextColor="grey"
-                    underlineColorAndroid="transparent"
-                    value={this.state.description}
-                    onChangeText={(text) => { this.setState({description: text}) } }
-	                />
-            </View>
+			<KeyboardAvoidingView behavior="padding" enabled style={styles.container}>
+                    <View style={styles.inputContainer}>
+                    <TextInput style={styles.inputs}
+                        placeholder="Title"
+                        placeholderTextColor="grey"
+                        underlineColorAndroid="transparent"
+                        value={this.state.title}
+                        onChangeText={(text) => { this.setState({title: text}) } }
+                        />
+                    </View> 
+                    <View style={styles.inputContainer}>  
+                    <TextInput style={styles.inputs}
+                        placeholder="Category"
+                        placeholderTextColor="grey"
+                        underlineColorAndroid="transparent"
+                        value={this.state.category}
+                        onChangeText={(text) => { this.setState({category: text}) } }
+                        />   
+                    </View>
+                    <View style={styles.inputContainer}> 
+                    <TextInput style={styles.inputs}
+                        placeholder="Date"
+                        placeholderTextColor="grey"
+                        underlineColorAndroid="transparent"
+                        value={this.state.date}
+                        onChangeText={(text) => { this.setState({date: text}) } }
+                        />
+                    </View>
+                    <View style={styles.inputContainer}>    
+                    <TextInput style={styles.inputs}
+                        placeholder="Location"
+                        placeholderTextColor="grey"
+                        underlineColorAndroid="transparent"
+                        value={this.state.location}
+                        onChangeText={(text) => { this.setState({location: text}) } }
+                        />        
+                    </View>
+                    <View style={styles.inputContainer2}>   
+                    <TextInput style={styles.descriptionInputs}
+                        multiline = {true}
+                        scrollEnabled={false}
+                        maxLength = {200}
+                        placeholder="Description"
+                        placeholderTextColor="grey"
+                        underlineColorAndroid="transparent"
+                        value={this.state.description}
+                        onChangeText={(text) => { this.setState({description: text}) } }
+                        />
+                    </View>
+                    <TouchableHighlight style={styles.buttonContainer} onPress={this.onCreateEventPress}>
+                        <Text style={styles.signUpText}>Create</Text>
+                    </TouchableHighlight> 
 			</KeyboardAvoidingView>
-			</ScrollView> 
 		);
     }
 }
 
 const styles = StyleSheet.create({
-	container:{
-		flex: 1,
-        backgroundColor: '#fff',
-	},
+	container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
 	contentContainer:{
         paddingTop: 20,
-	},
+    },
+    betterText: {
+        fontSize: 24,
+        marginBottom:20,
+    },
+    logoPic: {
+        width: 200,
+        height: 200,
+        marginBottom: 300,
+    },
+    buttonContainer: {
+        height:45,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom:20,
+        width:280,
+        borderRadius:30,
+        backgroundColor: "#9E5EE8",
+    },
+    buttonContainer2: {
+        height:45,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom:20,
+        width:280,
+        borderRadius:30,
+        backgroundColor: "#333",
+    },
+    signUpText: {
+        color: 'white',
+    },
+    inputContainer: {
+        backgroundColor: '#999',
+        borderRadius:30,
+        width:280,
+        height:45,
+        marginBottom:20,
+        flexDirection: 'row',
+        alignItems:'center'
+    },
+    inputContainer2: {
+        backgroundColor: '#999',
+        borderRadius:15,
+        width:280,
+        height:100,
+        marginBottom:20,
+        flexDirection: 'row',
+        alignItems:'center'
+    },
+    inputs:{
+        height:45,
+        marginLeft:16,
+        flex:1,
+    },
+    descriptionInputs:{
+        height:200,
+        margin:15,
+        flex:1,
+    },
 });

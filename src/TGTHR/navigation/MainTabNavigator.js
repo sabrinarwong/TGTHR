@@ -9,6 +9,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import editProfileScreen from './../screens/components/edits/editProfileScreen';
 import AboutScreen from '../screens/AboutScreen';
 import MapsScreen from '../screens/MapsScreen';
+import createEventScreen from '../screens/components/post/createEventScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -26,6 +27,7 @@ HomeStack.navigationOptions = {
 
 const EventsStack = createStackNavigator({
   Events: EventsScreen,
+  createEvent: createEventScreen,
 });
 
 EventsStack.navigationOptions = {

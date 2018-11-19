@@ -10,8 +10,10 @@ import {
     SectionListItem, 
     Button 
 } from 'react-native';
+import ActionButton from 'react-native-action-button';
 import { sectionListData } from '../data/sectionListData';
 import * as firebase from 'firebase';
+import TabBarIcon from '../components/TabBarIcon';
 
 export default class EventsScreen extends React.Component {
   static navigationOptions = {
@@ -68,11 +70,6 @@ export default class EventsScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button
-            title="New Event"
-            color='#9E5EE8'
-            onPress={() => this.props.navigation.navigate('createEvent')}
-        />
         <SectionList
             renderSectionHeader={({ section }) => 
                     <View style={{
@@ -123,6 +120,11 @@ export default class EventsScreen extends React.Component {
             refreshing={this.state.refreshing}
             onRefresh={() => this.onRefresh}
         />
+        <ActionButton buttonColor="#9E5EE8">
+          <ActionButton.Item buttonColor='#9E5EE8' title="New Event" onPress={() => this.props.navigation.navigate('createEvent')}>
+            <TabBarIcon name="md-create" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+          </ActionButton>  
       </View>
     );
   }
