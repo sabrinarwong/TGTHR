@@ -32,6 +32,14 @@ export default class editProfileScreen extends React.Component {
 	    this.state = {
 	      password: ''
 	    }
+	    this.database4 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/bio'); 
+	    this.state = {
+	      bio: ''
+	    }
+	    this.database5 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/location'); 
+	    this.state = {
+	      location: ''
+	    }
 	}
 	componentWillMount(){
 		this.startHeaderHeight = 100 + StatusBar.currentHeight;
@@ -48,6 +56,16 @@ export default class editProfileScreen extends React.Component {
 		this.database3.on('value', snap => {
 		  this.setState({
 		    password: snap.val(),
+		  });
+		});
+		this.database4.on('value', snap => {
+		  this.setState({
+		    bio: snap.val(),
+		  });
+		});
+		this.database5.on('value', snap => {
+		  this.setState({
+		    location: snap.val(),
 		  });
 		});
 	}
@@ -97,8 +115,7 @@ export default class editProfileScreen extends React.Component {
 			// 	onPress={() => this.props.navigation.goBack(null)}
 			// />
       
-			<ScrollView>
-			<KeyboardAvoidingView behavior="padding" enabled>
+			<KeyboardAvoidingView behavior="padding">
             <View style={{paddingTop:50, alignItems:"center"}}>
 	            <Text>Name</Text>
 	            <TextInput style={{width:200, height:40, borderWidth:1}}
@@ -110,13 +127,23 @@ export default class editProfileScreen extends React.Component {
 	                value={this.state.email}
 	                onChangeText={(text) => { this.setState({email: text}) } }
 	                />
+	            <Text>Location</Text>
+	            <TextInput multiline={true} style={{width:200, height:40, borderWidth:1,}}
+	                value={this.state.location}
+	                onChangeText={(text) => { this.setState({location: text}) } }
+	                />
+	            <Text>Bio</Text>
+	            <TextInput multiline={true} style={{width:200, height:40, borderWidth:1,}}
+	                value={this.state.bio}
+	                onChangeText={(text) => { this.setState({bio: text}) } }
+	                />
 	            <Text>Password</Text>
-	            <TextInput style={{width:200, height:40, borderWidth:1}}
+	            <TextInput secureTextEntry={true} style={{width:200, height:40, borderWidth:1, }}
 	                value={this.state.password}
 	                onChangeText={(text) => { this.setState({password: text}) }}
 	                />    
 	            <Text>Password Confirm</Text>
-	            <TextInput style={{width:200, height:40, borderWidth:1}}
+	            <TextInput secureTextEntry={true} style={{width:200, height:40, borderWidth:1,}}
 	                value={this.state.passwordConfirm}
 	                onChangeText={(text) => { this.setState({passwordConfirm: text}) }}
 	                />      
@@ -124,7 +151,6 @@ export default class editProfileScreen extends React.Component {
             	<Button title="Save Profile" onPress={this.onSaveProfilePress} />    
             </View>
 			</KeyboardAvoidingView>
-			</ScrollView> 
 		);
 	}
 }
