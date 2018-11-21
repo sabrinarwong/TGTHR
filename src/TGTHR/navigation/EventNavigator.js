@@ -4,6 +4,7 @@ import { createStackNavigator } from 'react-navigation';
 import MainTabNavigator from './MainTabNavigator';
 import EventsScreen from './../screens/EventsScreen';
 import createEventScreen from './../screens/components/post/createEventScreen';
+import viewEventScreen from './../screens/components/post/viewEventScreen';
 
 const EventStackNavigator = createStackNavigator(
   {
@@ -11,6 +12,8 @@ const EventStackNavigator = createStackNavigator(
         },
     createEvent: { screen: createEventScreen
         },
+    viewEvent: { screen: viewEventScreen
+        },    
 
     Main: { screen: MainTabNavigator },
   }

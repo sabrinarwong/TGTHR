@@ -124,6 +124,9 @@ export default class EventsScreen extends React.Component {
           <ActionButton.Item buttonColor='#9E5EE8' title="New Event" onPress={() => this.props.navigation.navigate('createEvent')}>
             <TabBarIcon name="md-create" style={styles.actionButtonIcon} />
           </ActionButton.Item>
+          <ActionButton.Item buttonColor='#9E5EE8' title="Test Screen" onPress={() => this.props.navigation.navigate('viewEvent')}>
+            <TabBarIcon name="md-create" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
           </ActionButton>  
       </View>
     );

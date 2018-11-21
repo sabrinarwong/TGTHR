@@ -3,6 +3,15 @@ import { SectionList, Image, StyleSheet, Text, View } from 'react-native';
 import { Constants } from 'expo';
 
 export default class ExpoConfigView extends React.Component {
+  static navigationOptions = {
+    title: 'About',
+    headerTitleStyle: {
+        color: '#ffffff',
+    },
+    headerStyle: {
+        backgroundColor: '#9E5EE8',
+    },
+  };
   render() {
     const { manifest } = Constants;
     const sections = [
