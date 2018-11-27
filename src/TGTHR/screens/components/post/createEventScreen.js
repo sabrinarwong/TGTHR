@@ -10,6 +10,7 @@ import {
 	KeyboardAvoidingView,
 } from 'react-native';
 import * as firebase from 'firebase';
+import DatePicker from 'react-native-datepicker';
 
 export default class createEventScreen extends React.Component {
     static navigationOptions = {
@@ -58,7 +59,7 @@ export default class createEventScreen extends React.Component {
             return;
         }
         if(this.state.date == '') {
-            Alert.alert("Date cannot be blank!");
+            Alert.alert("Date and time cannot be blank!");
             return;
         }
         if(this.state.location == '') {
@@ -111,14 +112,32 @@ export default class createEventScreen extends React.Component {
                         />   
                     </View>
                     <View style={styles.inputContainer}> 
-                    <TextInput style={styles.inputs}
+                    {/* <TextInput style={styles.inputs}
                         placeholder="Date"
                         placeholderTextColor="grey"
                         underlineColorAndroid="transparent"
                         value={this.state.date}
                         onChangeText={(text) => { this.setState({date: text}) } }
-                        />
-                    </View>
+                        /> */}
+                    <DatePicker
+                        style={styles.inputs}
+                        mode="datetime"
+                        date={this.state.date}
+                        //placeholder="Select date and time."
+                        format="YYYY-MM-DD HH:mm"
+                        //minDate={Date.now()}
+                        //confirmBtnText="Confirm"
+                        //cancelBtnText="Cancel"
+                        allowFontScaling={false}
+                        showIcon={true}
+                        customStyles={{
+                            dateInput: {
+                                borderWidth: 0,
+                            }
+                        }}
+                        onDateChange={(datetime) => {this.setState({date: datetime})}}
+                        />    
+                    </View>    
                     <View style={styles.inputContainer}>    
                     <TextInput style={styles.inputs}
                         placeholder="Location"
@@ -190,7 +209,7 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     inputContainer: {
-        backgroundColor: '#999',
+        backgroundColor: '#d9d9d9',
         borderRadius:30,
         width:280,
         height:45,
@@ -199,7 +218,7 @@ const styles = StyleSheet.create({
         alignItems:'center'
     },
     inputContainer2: {
-        backgroundColor: '#999',
+        backgroundColor: '#d9d9d9',
         borderRadius:15,
         width:280,
         height:100,
