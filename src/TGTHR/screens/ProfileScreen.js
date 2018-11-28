@@ -86,6 +86,7 @@ export default class ProfileScreen extends React.Component {
 		<ScrollView style={styles.container}>
     	<View style={styles.container}>
 				{/* display profile picture */}
+				{/* FIX: figure out how to display image from database */}
 			<View style={styles.profileContainer}>
 				<Image source={require('../assets/images/profile/profile.jpg')} style={styles.profileImage}/>
 				<View>
