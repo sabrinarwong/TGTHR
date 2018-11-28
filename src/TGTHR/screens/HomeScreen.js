@@ -52,6 +52,9 @@ export default class HomeScreen extends React.Component {
 
   onNearbyPress = () => {
 		this.props.navigation.navigate("Maps");
+  }
+  onEventsPress = () => {
+		this.props.navigation.navigate("Events");
 	}
 
   render() {
@@ -83,16 +86,20 @@ export default class HomeScreen extends React.Component {
                   horizontal={true}
                   style={{marginRight:20}}
                   showsHorizontalScrollIndicator={false}>
+                  <TouchableOpacity onPress={ this.onEventsPress }>
                   <Category 
                   // imageUri={require('../assets/images/tgthr.png')}
                   imageUri={{uri: 'https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fparis.png?alt=media&token=e7bbb93b-650c-4e82-9b7d-34aafc066bc7'}}
                   name="Explore"
                   />
+                  </TouchableOpacity>
 
-                  <Category 
-                  imageUri={{uri: 'https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fdining.jpg?alt=media&token=e4cf3b5a-d114-401f-9cd9-d03dd9616551'}}
-                  name="Dining"
-                  />
+                  <TouchableOpacity onPress={ this.onEventsPress }>
+                    <Category 
+                    imageUri={{uri: 'https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fdining.jpg?alt=media&token=e4cf3b5a-d114-401f-9cd9-d03dd9616551'}}
+                    name="Dining"
+                    />
+                  </TouchableOpacity>
                   
                   <TouchableOpacity onPress={ this.onNearbyPress }>
                     <Category 
@@ -101,20 +108,26 @@ export default class HomeScreen extends React.Component {
                     />
                   </TouchableOpacity>  
 
+                  <TouchableOpacity onPress={ this.onEventsPress }>
                   <Category 
                   imageUri={{uri: 'https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fhiking.jpg?alt=media&token=fce4494d-1e52-403d-a915-7fee5aa476b3'}}
                   name="Outdoors"
                   />
+                  </TouchableOpacity>
 
+                  <TouchableOpacity onPress={ this.onEventsPress }>
                   <Category 
                   imageUri={{uri: 'https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Ftabletopgaming.jpg?alt=media&token=80a88e4b-5eb0-4dc4-8ed5-aa8e71c422d5'}}
                   name="Tabletop Gaming"
                   />
+                  </TouchableOpacity>
 
+                  <TouchableOpacity onPress={ this.onEventsPress }>
                   <Category 
                   imageUri={{uri: 'https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fnightlife.jpg?alt=media&token=a511e0f8-da52-4660-b874-f1b7c4f463d3'}}
                   name="Night Life"
                   />
+                  </TouchableOpacity>
 
                 </ScrollView>  
               </View>
@@ -126,12 +139,14 @@ export default class HomeScreen extends React.Component {
                   Unique events, hand picked daily by our staff
                 </Text>
 
+                <TouchableOpacity onPress={ this.onEventsPress }>
                 <View style={{width:width-40, height:200, marginTop:20}}>
                 <Image
                   style={styles.staffPickImage}
                   source={{uri: 'https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fkayaking.jpg?alt=media&token=8e2112b1-5b31-4683-b9e9-e290fb9e9460'}}
                   />
                 </View>
+                </TouchableOpacity>
               </View>
               <View style={{marginTop:40, paddingHorizontal:20}}>
                 <Text style={{fontSize:24, fontWeight:'700'}}>
@@ -154,21 +169,27 @@ export default class HomeScreen extends React.Component {
                   Nearby Events {this.state.img1}
                 </Text>
                 <View style={{paddingHorizontal:20, marginVertical:20, flexDirection:'row', flexWrap:'wrap', justifyContent:'space-between' }}>
+                <TouchableOpacity onPress={ this.onEventsPress }>
                   <Events width={width}
                     image="https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Ftenrens.jpg?alt=media&token=9e430f58-590c-4c2f-ad9c-3c546033232b"
                     title="Ten Ren's secret meetup"
                     location="Ten Ren's Riverside"
                     date="November 22nd" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={ this.onEventsPress }>
                   <Events width={width}
                     image="https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fucrbelltower.jpg?alt=media&token=9fa28a11-c81c-41ac-822b-4251ef4ca95b"
                     title="Cry about finals"
                     location="UCR bell tower"
                     date="December 7th" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={ this.onEventsPress }>
                   <Events width={width}
                     image="https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fnetflix.png?alt=media&token=0d5a11a2-4f63-41bf-8493-baae39596efc"
                     title="Procrastinate CS180 project"
                     location="UCR WCH"
                     date="November 9th" />
+                </TouchableOpacity>
                 </View>
               </View>
             </View>

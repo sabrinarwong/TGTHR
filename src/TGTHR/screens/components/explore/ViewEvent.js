@@ -8,19 +8,35 @@ import {
     ScrollView,
     Alert,
   } from 'react-native';
+import * as firebase from 'firebase';
 
 
 class viewEvent extends React.Component {
 
     constructor(props){
         super(props);
+        this.database = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/name'); 
         this.state = {
-            rsvpList: "",
-        };
+            name: '',
+        }
     }
 
     onRSVPPress = () => {
+        //write the rsvp-ers data in the events list
+        var rsvpKey = firebase.database().ref().child('events/' + this.props.eventID + '/rsvp').push().key;
+        var updates = {};
+        updates['/events/' + this.props.eventID + '/rsvp/' + rsvpKey] = this.state.name;
+
+        firebase.database().ref().update(updates);
         Alert.alert("you have rspv'd to this event.");
+    }
+
+    componentWillMount(){
+        this.database.on('value', snap => {
+            this.setState({
+              name: snap.val()
+            });
+        });
     }
 
     render() {
@@ -38,13 +54,25 @@ class viewEvent extends React.Component {
                 
                 
                 <Text style={styles.topText}>When?</Text>
-                <Text style={styles.text}>{this.props.date}</Text>   
+                <View style={styles.textBorder}>
+                    <Text style={styles.text}>{this.props.date}</Text>   
+                </View>
                 <Text style={styles.topText}>Where?</Text>
-                <Text style={styles.text}>{this.props.location}</Text>
+                <View style={styles.textBorder}>
+                    <Text style={styles.text}>{this.props.location}</Text>
+                </View>
                 <Text style={styles.topText}>Hosted by:</Text>
-                <Text style={styles.text}>{this.props.host}</Text>
+                <View style={styles.textBorder}>
+                    <Text style={styles.text}>{this.props.host}</Text>
+                </View>
                 <Text style={styles.topText}>Category:</Text>
-                <Text style={styles.text}>{this.props.category}</Text>
+                <View style={styles.textBorder}>
+                    <Text style={styles.text}>{this.props.category}</Text>
+                </View>
+                <Text style={styles.topText}>Description:</Text>
+                <View style={styles.textBorder}>
+                    <Text style={styles.text}>{this.props.description}</Text>
+                </View>
                 <TouchableHighlight style={styles.buttonContainer2} onPress={this.onRSVPPress}>
                     <Text style={styles.RSVPText}>RSVP</Text>
                 </TouchableHighlight>
@@ -57,6 +85,12 @@ class viewEvent extends React.Component {
 export default viewEvent;
 
 const styles = StyleSheet.create({
+    textBorder: {
+        borderColor:'blue',
+        borderWidth:3,
+        borderRadius:5,
+        margin:10,
+    },
     container: {
         flex:1,
     },
@@ -72,7 +106,7 @@ const styles = StyleSheet.create({
         fontSize:12,
     },
     text: {
-        paddingLeft:10,
+        padding:5,
         fontSize:22,
         color:"black",
     },

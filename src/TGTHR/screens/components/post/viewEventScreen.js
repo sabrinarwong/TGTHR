@@ -24,77 +24,13 @@ export default class createEventScreen extends React.Component {
         },
     };
 
-    constructor() {
-        super();
-        console.ignoredYellowBox = [
-            'Setting a timer'
-          ];
-        this.database = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/name'); 
-	    this.state = {
-          host: '',
-          title: '',
-          category: '',
-          date: '',
-          location: '',
-          description: '',
-	    }
-    }
-
-    componentWillMount() {
-        this.startHeaderHeight = 100 + StatusBar.currentHeight;
-        this.database.on('value', snap => {
-            this.setState({
-              host: snap.val(),
-            });
-        });
-    }
-    
-    onCreateEventPress = () => {
-
-        if(this.state.title == '') {
-            Alert.alert("Title cannot be blank!");
-            return;
-        }
-        if(this.state.category == '') {
-            Alert.alert("Category cannot be blank!");
-            return;
-        }
-        if(this.state.date == '') {
-            Alert.alert("Date cannot be blank!");
-            return;
-        }
-        if(this.state.location == '') {
-            Alert.alert("Location cannot be blank!");
-            return;
-        }
-
-        var eventData = {
-            host: this.state.host,
-            title: this.state.title,
-            category: this.state.category,
-            date: this.state.date,
-            location: this.state.location,
-            description: this.state.description
-        };
-        
-        //get a key for a new event
-        var newPostKey = firebase.database().ref().child('events').push().key;
-
-        //write the new event's data in the events list
-        var updates = {};
-        updates['/events/' + newPostKey] = eventData;
-
-        firebase.database().ref().update(updates);
-
-        Alert.alert("Event sucessfully created");
-
-        this.props.navigation.navigate("Events"); //go back to Events page
-    }
-
     render() {
         return(
             <KeyboardAvoidingView>
                 <View>
+                    {/* THIS IS WHAT YOU NEED TO DO: USE '<ViewEvent /> TAG TO VIEW AN EVENT. I MADE IT EASY FOR YOU.
+                        SEE HOW ON THE TOP I IMPORT 'VIEW EVENT', WELL JUST DO THAT EZPZ. THEN WHEN A USER PRESSES ON AN EVENT, 
+                        FETCH THE EVENT INFORMATION FROM FIREBASE AND PASS IT INTO JUST LIKE THIS: */}
                     <ViewEvent
                     imageUri={{uri: "https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Ftenrens.jpg?alt=media&token=9e430f58-590c-4c2f-ad9c-3c546033232b" }}
                     title="Ten Ren's secret meetup"
@@ -102,6 +38,8 @@ export default class createEventScreen extends React.Component {
                     location="33.18,-118.4"
                     host="ryan"
                     category="food"
+                    description="This is a secret meetup only for people who know where Ten Ren's is! We will never reveal our secrets..."
+                    eventID="eventID"
                     />
                 </View>
             </KeyboardAvoidingView>
