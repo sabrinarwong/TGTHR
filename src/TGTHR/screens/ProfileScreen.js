@@ -26,10 +26,8 @@ export default class ProfileScreen extends React.Component {
 	};
 
 	constructor(){
-	    super();
-	    console.ignoredYellowBox = [
-	      'Setting a timer'
-	    ];  
+			super();
+			console.disableYellowBox = true;	// just use this to disable all yellow warnings lol
 	    this.database = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/name'); 
 	    this.state = {
 	      name: ''
