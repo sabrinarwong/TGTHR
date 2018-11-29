@@ -4,8 +4,8 @@ import {
 	View,
 	Image,
 	Text,
+	TouchableHighlight,
 	TouchableOpacity,
-	Button,
 	StatusBar,
 	ScrollView,
 } from 'react-native';
@@ -121,9 +121,14 @@ export default class ProfileScreen extends React.Component {
 					   <Image style={styles.socialImage} source={require('../assets/images/profile/icons/whatsapp.png')}/>
 					</TouchableOpacity>
 			</View>
-
-			<Button title="Edit Profile" onPress={this.onEditProfilePress} />
-			<Button title="Sign out" onPress={this.onSignoutPress} />
+			<View style={styles.center}>			
+				<TouchableHighlight style={styles.buttonContainer2} onPress={this.onEditProfilePress}>
+					<Text style={styles.text}>Edit Profile</Text>
+				</TouchableHighlight> 
+				<TouchableHighlight style={styles.buttonContainer2} onPress={this.onSignoutPress}>
+					<Text style={styles.text}>Sign Out</Text>
+				</TouchableHighlight> 
+			</View>
 		</View>
 		</ScrollView>	
   	);
@@ -132,6 +137,23 @@ export default class ProfileScreen extends React.Component {
 
 
 const styles = StyleSheet.create({
+	center:{
+		justifyContent:'center',
+		alignItems:'center',
+	},
+	text:{
+		color:"white",
+	},
+	buttonContainer2: {
+		height:45,
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginBottom:20,
+		width:280,
+		borderRadius:30,
+		backgroundColor: "#333",
+	},
 	container:{
 		flex: 1,
 		backgroundColor: '#fff',

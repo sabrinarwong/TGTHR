@@ -5,6 +5,7 @@ import {
 	Image,
 	Text,
 	TouchableOpacity,
+	TouchableHighlight,
 	Button,
 	ScrollView,
 	StatusBar,
@@ -104,15 +105,16 @@ export default class editProfileScreen extends React.Component {
 		return ref.put(blob);
 	}
 
+	// THIS DOESNT WORK WAAAAA
     onSaveProfilePress = () => {
         if(firebase.auth().currentUser.name !== this.state.name) {
 			changeName = (currentPassword, newName) => {
 			  this.reauthenticate(currentPassword).then(() => {
 			    // var user = firebase.auth().currentUser;
 			    firebase.auth().currentUser.updateProfile(this.state.name).then(() => {
-			      console.log("Name updated!");
-			    }).catch((error) => { console.log(error); });
-			  }).catch((error) => { console.log(error); });
+			      Alert.alert("Name updated!");
+			    }).catch((error) => { Alert.alert(error); });
+			  }).catch((error) => { Alert.alert(error); });
 			}
 		}
         if(firebase.auth().currentUser.currentPassword !== this.state.password) {
@@ -120,9 +122,9 @@ export default class editProfileScreen extends React.Component {
 			  this.reauthenticate(currentPassword).then(() => {
 			    // var user = firebase.auth().currentUser;
 			    firebase.auth().currentUser.updatePassword(this.state.password).then(() => {
-			      console.log("Password updated!");
-			    }).catch((error) => { console.log(error); });
-			  }).catch((error) => { console.log(error); });
+			      Alert.alert("Password updated!");
+			    }).catch((error) => { Alert.alert(error); });
+			  }).catch((error) => { Alert.alert(error); });
 			}
 		}
 		if(firebase.auth().currentUser.email !== this.state.email) {
@@ -130,16 +132,13 @@ export default class editProfileScreen extends React.Component {
 			  this.reauthenticate(currentPassword).then(() => {
 			    // var user = firebase.auth().currentUser;
 			    firebase.auth().currentUser.updateEmail(this.state.email).then(() => {
-			      console.log("Email updated!");
-			    }).catch((error) => { console.log(error); });
-			  }).catch((error) => { console.log(error); });
+			      Alert.alert("Email updated!");
+			    }).catch((error) => { Alert.alert(error); });
+			  }).catch((error) => { Alert.alert(error); });
 			}
 		}
-		// if(this.state.password !== this.state.passwordConfirm) {
-  //           Alert.alert("Passwords do not match");
-  //           return;
-  //       }
-	    this.props.navigation.navigate("Main");
+		Alert.alert("Save successful");
+	  this.props.navigation.navigate("Main");
     }
 
 	render() {
@@ -184,8 +183,11 @@ export default class editProfileScreen extends React.Component {
 					onChangeText={(text) => { this.setState({email: text}) } }/>
 			</View>
 
-
-			<Button title="Save" onPress={this.onSaveProfilePress} />
+			<View style={styles.center}>
+				<TouchableHighlight style={styles.buttonContainer2} onPress={this.onSaveProfilePress} >
+					<Text style={styles.text}>Save</Text>
+				</TouchableHighlight>
+			</View>
 		</View>
 		</ScrollView>	
   	);
@@ -241,6 +243,23 @@ export default class editProfileScreen extends React.Component {
 // }
 
 const styles = StyleSheet.create({
+	center:{
+		justifyContent:'center',
+		alignItems:'center',
+	},
+	text:{
+		color:"white",
+	},
+	buttonContainer2: {
+		height:45,
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginBottom:20,
+		width:280,
+		borderRadius:30,
+		backgroundColor: "#333",
+	},
 	container:{
 		flex: 1,
 		backgroundColor: '#fff',
