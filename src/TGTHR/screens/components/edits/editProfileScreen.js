@@ -20,9 +20,14 @@ export default class editProfileScreen extends React.Component {
 
 	constructor(){
 	    super();
-	    console.ignoredYellowBox = [
-	      'Setting a timer'
-	    ];  
+	    // console.ignoredYellowBox = [
+	    //   'Setting a timer'
+	    // ];  
+		const profRef = firebase.storage().ref().child("profile_images/" + firebase.auth().currentUser.uid);
+		const profImageURL = profRef.getDownloadURL();
+		this.state = {
+			profImageUrl: ''
+		}
 	    this.database = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/name'); 
 	    this.state = {
 	      name: ''
@@ -43,13 +48,15 @@ export default class editProfileScreen extends React.Component {
 	    this.state = {
 	      location: ''
 	    }
-	    // this.storage = firebase.storage().ref().child("profile_images/" + firebase.auth().currentUser.uid); 
-	    // this.state = {
-	    //   profileImage: ''
-	    // }
 	}
 	componentWillMount(){
 		this.startHeaderHeight = 100 + StatusBar.currentHeight;
+		const profRef = firebase.storage().ref().child("profile_images/" + firebase.auth().currentUser.uid);
+		const profURL = profRef.getDownloadURL().then((url) => {
+			this.setState({
+				profImageUrl: {uri: url}
+			})
+		});
 		this.database.on('value', snap => {
 		  this.setState({
 		    name: snap.val(),
@@ -75,11 +82,8 @@ export default class editProfileScreen extends React.Component {
 		    location: snap.val(),
 		  });
 		});
-		// this.storage.on('value', snap => {
-		//   this.setState({
-		//     profileImage: snap.val(),
-		//   });
-		// });
+
+
 	}
 
 	onChooseImagePress = async () => {
@@ -105,44 +109,46 @@ export default class editProfileScreen extends React.Component {
 	}
 
     onSaveProfilePress = () => {
-        if(firebase.auth().currentUser.name !== this.state.name) {
-			changeName = (currentPassword, newName) => {
-			  this.reauthenticate(currentPassword).then(() => {
-			    // var user = firebase.auth().currentUser;
-			    firebase.auth().currentUser.updateProfile(this.state.name).then(() => {
-			      console.log("Name updated!");
-			    }).catch((error) => { console.log(error); });
-			  }).catch((error) => { console.log(error); });
-			}
-		}
-        if(firebase.auth().currentUser.currentPassword !== this.state.password) {
-			changePassword = (currentPassword, newPassword) => {
-			  this.reauthenticate(currentPassword).then(() => {
-			    // var user = firebase.auth().currentUser;
-			    firebase.auth().currentUser.updatePassword(this.state.password).then(() => {
-			      console.log("Password updated!");
-			    }).catch((error) => { console.log(error); });
-			  }).catch((error) => { console.log(error); });
-			}
-		}
-		if(firebase.auth().currentUser.email !== this.state.email) {
-			changeEmail = (currentPassword, newEmail) => {
-			  this.reauthenticate(currentPassword).then(() => {
-			    // var user = firebase.auth().currentUser;
-			    firebase.auth().currentUser.updateEmail(this.state.email).then(() => {
-			      console.log("Email updated!");
-			    }).catch((error) => { console.log(error); });
-			  }).catch((error) => { console.log(error); });
-			}
-		}
+  //       if(firebase.auth().currentUser.name !== this.state.name) {
+		// 	changeName = (currentPassword, newName) => {
+		// 	  this.reauthenticate(currentPassword).then(() => {
+		// 	    // var user = firebase.auth().currentUser;
+		// 	    firebase.auth().currentUser.updateProfile(this.state.name).then(() => {
+		// 	      console.log("Name updated!");
+		// 	    }).catch((error) => { console.log(error); });
+		// 	  }).catch((error) => { console.log(error); });
+		// 	}
+		// }
+  //       if(firebase.auth().currentUser.currentPassword !== this.state.password) {
+		// 	changePassword = (currentPassword, newPassword) => {
+		// 	  this.reauthenticate(currentPassword).then(() => {
+		// 	    // var user = firebase.auth().currentUser;
+		// 	    firebase.auth().currentUser.updatePassword(this.state.password).then(() => {
+		// 	      console.log("Password updated!");
+		// 	    }).catch((error) => { console.log(error); });
+		// 	  }).catch((error) => { console.log(error); });
+		// 	}
+		// }
+		// if(firebase.auth().currentUser.email !== this.state.email) {
+		// 	changeEmail = (currentPassword, newEmail) => {
+		// 	  this.reauthenticate(currentPassword).then(() => {
+		// 	    // var user = firebase.auth().currentUser;
+		// 	    firebase.auth().currentUser.updateEmail(this.state.email).then(() => {
+		// 	      console.log("Email updated!");
+		// 	    }).catch((error) => { console.log(error); });
+		// 	  }).catch((error) => { console.log(error); });
+		// 	}
+		// }
 		// if(this.state.password !== this.state.passwordConfirm) {
   //           Alert.alert("Passwords do not match");
   //           return;
   //       }
-	    this.props.navigation.navigate("Main");
+	    this.props.navigation.navigate("Profile");
     }
 
 	render() {
+
+
   	return(
 		<ScrollView style={styles.container}>
     	<View style={styles.container}>
@@ -150,15 +156,16 @@ export default class editProfileScreen extends React.Component {
 			{/* edit profile picture */}
 			{/* can upload but not show*/}
 			<View style={styles.profileContainer}>
-				<Button title = "Choose image..." onPress = {this.onChooseImagePress} />
-
+				<TouchableOpacity onPress = {this.onChooseImagePress}>
+					<Image source={this.state.profImageUrl} style={styles.profileImage}  />
+				</TouchableOpacity>
 				<View>
 					{/* edit firstName lastName */}
 					<TextInput 
 						style={styles.nameText} 
 						value={this.state.name} 
 						onChangeText={(text) => { 
-							this.setState({name: text})}}/>
+							this.setState({name: text})}} />
 					{/* insert user information */}
 					<TextInput 
 						style={{marginLeft: 20, fontSize: 19}} 
@@ -184,7 +191,7 @@ export default class editProfileScreen extends React.Component {
 					onChangeText={(text) => { this.setState({email: text}) } }/>
 			</View>
 
-
+			{/* FIX: save button does not work */}
 			<Button title="Save" onPress={this.onSaveProfilePress} />
 		</View>
 		</ScrollView>	

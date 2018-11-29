@@ -50,6 +50,12 @@ export default class ProfileScreen extends React.Component {
 
 	componentWillMount(){
 		this.startHeaderHeight = 100 + StatusBar.currentHeight;
+		const profRef = firebase.storage().ref().child("profile_images/" + firebase.auth().currentUser.uid);
+		const profURL = profRef.getDownloadURL().then((url) => {
+			this.setState({
+				profImageUrl: {uri: url}
+			})
+		});
 		this.database.on('value', snap => {
 		  this.setState({
 		    name: snap.val(),
@@ -60,7 +66,6 @@ export default class ProfileScreen extends React.Component {
 		    email: snap.val(),
 		  });
 		});
-		this.startHeaderHeight = 100 + StatusBar.currentHeight;
 		this.database3.on('value', snap => {
 		  this.setState({
 		    bio: snap.val(),
@@ -71,6 +76,7 @@ export default class ProfileScreen extends React.Component {
 		    location: snap.val(),
 		  });
 		});
+
 	}
 
 	onEditProfilePress = () => {
@@ -86,9 +92,10 @@ export default class ProfileScreen extends React.Component {
 		<ScrollView style={styles.container}>
     	<View style={styles.container}>
 				{/* display profile picture */}
-				{/* FIX: figure out how to display image from database */}
+				{/* DONE FIX: figure out how to display image from database */}
+				{/* FIX: figure out how to update image from database after uploading new one*/}
 			<View style={styles.profileContainer}>
-				<Image source={require('../assets/images/profile/profile.jpg')} style={styles.profileImage}/>
+				<Image source={this.state.profImageUrl} style={styles.profileImage}/>
 				<View>
 					<Text style={styles.nameText}> {this.state.name} {/*firstName lastName */} </Text>
 						<Text style={{marginLeft: 20, fontSize: 19}}>{this.state.location}{/* insert user information */} </Text>
@@ -145,12 +152,12 @@ const styles = StyleSheet.create({
 		margin: 15,
 	},
 	profileImage:{
+		width:100,
+		height:100,
 		borderWidth:1,
 		borderColor:'rgba(0,0,0,0.2)',
 		alignItems:'center',
 		justifyContent:'center',
-		width:100,
-		height:100,
 		backgroundColor:'#fff',
 		borderRadius:50,
 		marginBottom: 5,
