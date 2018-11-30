@@ -2,6 +2,25 @@ import React from 'react';
 import { StyleSheet, Text, View} from 'react-native'
 import MapView, {Marker} from 'react-native-maps';
 
+import * as firebase from 'firebase';
+
+function snapshotToArray(snapshot) {
+    var returnArr = [];
+
+    snapshot.forEach(function(childSnapshot) {
+        var item = childSnapshot.val();
+        item.key = childSnapshot.key;
+        returnArr.push(item);
+    });
+
+    return returnArr;
+};
+
+function getArticlePromise() {
+	return firebase.database().ref().child('events/eventID').once('value').then(function(snapshot) {
+		return snapshot.val();
+	});
+}
 
 export default class MapsScreen extends React.Component {
 	static navigationOptions = {
@@ -23,6 +42,7 @@ export default class MapsScreen extends React.Component {
 	}
 	constructor(props){
 		super(props);
+		console.disableYellowBox = true;
 		this.state = {
 		  markers: [{
 		    title: 'hello',
@@ -37,12 +57,21 @@ export default class MapsScreen extends React.Component {
 			     	latitude:33.973489,
 					longitude:-117.328171
 			    },  
-		  }]
+		  }],
+		  markers2: [
+			  {
+				  title:'test',
+				  coordinates: {
+					  latitude: 0,
+					  longitude: 0,
+				  },
+			  },
+		  ],
 		}
 	};
-
-	render() {
+	render() {		
 		return (
+			
 			
 			<View style={styles.container}>
 
@@ -64,7 +93,7 @@ export default class MapsScreen extends React.Component {
 						))}
 				</MapView>
 			</View>
-			
+			// <View><Text>{lat}</Text></View>
 		);
 	}
 }
