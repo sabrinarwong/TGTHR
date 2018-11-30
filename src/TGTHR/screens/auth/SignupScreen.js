@@ -2,10 +2,11 @@ import React from 'react';
 import {StyleSheet, View, Text, TextInput, TouchableHighlight, Alert, Image, KeyboardAvoidingView} from 'react-native';
 import * as firebase from 'firebase';
 
-function writeUserData(userId, name, email) {
+function writeUserData(userId, name, email, bio) {
     firebase.database().ref('users/' + userId).set({
       name: name,
       email: email,
+      bio: bio,
     //   profile_picture : imageUrl
     });
   }
@@ -22,6 +23,7 @@ export default class SignupScreen extends React.Component {
             email: "",
             password: "",
             passwordConfirm: "",
+            bio: "Hello!",
         };
     }
 
@@ -36,7 +38,7 @@ export default class SignupScreen extends React.Component {
         }
         firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
             .then(() => {
-                writeUserData(firebase.auth().currentUser.uid, this.state.name, this.state.email)
+                writeUserData(firebase.auth().currentUser.uid, this.state.name, this.state.email, this.state.bio);
             }, (error) => {
                 Alert.alert(error.message);
             });
