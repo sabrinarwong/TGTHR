@@ -8,7 +8,8 @@ import {
     RefreshControl, 
     Header, 
     SectionListItem, 
-    Button 
+    Button,
+    TouchableHighlight 
 } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import { sectionListData } from '../data/sectionListData';
@@ -91,6 +92,8 @@ export default class EventsScreen extends React.Component {
                         flexDirection: 'column',
                         backgroundColor: '#fff'
                     }}>
+                    {/*<TouchableHighlight
+                    underlayColor={'#f2f2f2'}>*/}
                         <Text style={{
                             marginTop: 10,
                             marginHorizontal: 10,
@@ -112,6 +115,7 @@ export default class EventsScreen extends React.Component {
                             fontSize: 15,
                         }}>{item.description}
                         </Text>
+                    {/* </TouchableHighlight> */}
                     </View>
             }
             sections={sectionListData}
