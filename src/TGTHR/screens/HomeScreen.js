@@ -25,9 +25,19 @@ const{height,width} = Dimensions.get('window');
 
 export default class HomeScreen extends React.Component {
 
-  
+
+  // static navigationOptions = {
+  //   header: null,
+  // };
+
   static navigationOptions = {
-    header: null,
+    title: 'Home',
+    headerTitleStyle: {
+        color: '#ffffff',
+    },
+    headerStyle: {
+        backgroundColor: '#9E5EE8',
+    },
   };
 
   constructor(){
@@ -58,12 +68,12 @@ export default class HomeScreen extends React.Component {
 	}
 
   render() {
-    
+  
 
     return (
       <SafeAreaView style={styles.flex1}>
         <View style={styles.flex1}>
-          <View style={styles.topBar}>
+          {/* <View style={styles.topBar}>
             <View style={styles.topBarContents}>
               <TabBarIcon name='md-search' />
               <TextInput 
@@ -73,14 +83,14 @@ export default class HomeScreen extends React.Component {
                 style={styles.topBarText}
               />
             </View>
-          </View>
+          </View> */}
 
           <ScrollView style={{backgroundColor:'white'}}>
             <View> 
               <Text style={styles.headerText}>
                 What can we help you with, {this.state.name}?
               </Text>
-              
+            
               <View style={{height:130, marginTop:20}}>
                 <ScrollView 
                   horizontal={true}
@@ -100,7 +110,7 @@ export default class HomeScreen extends React.Component {
                     name="Dining"
                     />
                   </TouchableOpacity>
-                  
+                
                   <TouchableOpacity onPress={ this.onNearbyPress }>
                     <Category 
                     imageUri={{uri: 'https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fnearby-icon-3.jpg?alt=media&token=3e2eef3f-a38c-4d5b-a05c-6bc2c84eaa76'}}
@@ -201,7 +211,7 @@ export default class HomeScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  
+
   staffPickImage:{
     flex:1, 
     height:null,
