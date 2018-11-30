@@ -9,6 +9,7 @@ import {
 	TextInput,
 	KeyboardAvoidingView,
 } from 'react-native';
+import { ImagePicker } from 'expo';
 import * as firebase from 'firebase';
 import DatePicker from 'react-native-datepicker';
 
@@ -36,7 +37,9 @@ export default class createEventScreen extends React.Component {
           date: '',
           location: '',
           description: '',
-	    }
+          image: 'Upload Image',
+        }
+        this.pickImage = this.pickImage.bind(this);
     }
 
     componentWillMount() {
@@ -47,6 +50,18 @@ export default class createEventScreen extends React.Component {
             });
         });
     }
+
+    pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            allowsEditing: true,
+            base64: true,
+          });
+      if (!result.cancelled) {
+            this.setState({
+              image: result.uri,
+            });
+          }
+    };
     
     onCreateEventPress = () => {
 
@@ -66,6 +81,10 @@ export default class createEventScreen extends React.Component {
             Alert.alert("Location cannot be blank!");
             return;
         }
+        if(this.state.image == 'Upload Image') {
+            Alert.alert("Please pick an image.");
+            return;
+        }
 
         var eventData = {
             host: this.state.host,
@@ -73,7 +92,8 @@ export default class createEventScreen extends React.Component {
             category: this.state.category,
             date: this.state.date,
             location: this.state.location,
-            description: this.state.description
+            description: this.state.description,
+            image: this.state.image
         };
         
         //get a key for a new event
@@ -85,7 +105,7 @@ export default class createEventScreen extends React.Component {
 
         firebase.database().ref().update(updates);
 
-        Alert.alert("Event sucessfully created");
+        Alert.alert("Event successfully created");
 
         this.props.navigation.navigate("Events"); //go back to Events page
     }
@@ -159,6 +179,11 @@ export default class createEventScreen extends React.Component {
                         onChangeText={(text) => { this.setState({description: text}) } }
                         />
                     </View>
+                    <TouchableHighlight style={styles.inputContainer} onPress={this.pickImage}>
+                        <Text style={styles.imageInputs} numberOfLines={1}> 
+                        {this.state.image}
+                        </Text>
+                    </TouchableHighlight>
                     <TouchableHighlight style={styles.buttonContainer} onPress={this.onCreateEventPress}>
                         <Text style={styles.signUpText}>Create</Text>
                     </TouchableHighlight> 
@@ -226,14 +251,18 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems:'center'
     },
-    inputs:{
+    inputs: {
         height:45,
         marginLeft:16,
         flex:1,
     },
-    descriptionInputs:{
+    descriptionInputs: {
         height:200,
         margin:15,
         flex:1,
     },
+    imageInputs: {
+        marginLeft:16,
+        flex: 1
+    }
 });
