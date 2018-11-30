@@ -6,8 +6,10 @@ function writeUserData(userId, name, email) {
     firebase.database().ref('users/' + userId).set({
       name: name,
       email: email,
-    //   profile_picture : imageUrl
     });
+    // firebase.storage().ref().child('profile_images/' + userId).set({
+    //   profile_picture : imageUrl
+    // });
   }
 
 export default class SignupScreen extends React.Component {
