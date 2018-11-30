@@ -8,12 +8,19 @@ import {
     RefreshControl, 
     Header, 
     SectionListItem, 
-    Button 
+    Button,
+    Alert,
 } from 'react-native';
 import ActionButton from 'react-native-action-button';
-import { sectionListData } from '../data/sectionListData';
+// import { sectionListData } from '../data/sectionListData';
 import * as firebase from 'firebase';
 import TabBarIcon from '../components/TabBarIcon';
+
+
+
+
+
+
 
 export default class EventsScreen extends React.Component {
   static navigationOptions = {
@@ -26,31 +33,36 @@ export default class EventsScreen extends React.Component {
       },
     };
 
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = { 
             refreshing: false,
             data: [],
-            //isFetching: false,
+            name:'placeholder',
         };
-    }
+        // this.database = firebase.database().ref().child("/events/-LRdgRY8KahA9fPBvJUm/title");
+        this.database = firebase.database().ref().child('users/yIYJ4NbWSDdgEU6GEvkaeJP5hQA3/bio');
+        // this.database = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/name'); 
+        // this.database = firebase.database().ref().child('events');
 
-  fetchData = async () => {
+    }
+    componentWillMount(){
+        this.database.on('value', snap => {
+            this.setState({
+              name: snap.val(),
+            });
+          });
+    };
+
+  fetchData (){
 
   };
-  onRefresh() {
-      this.setState({ refreshing: true });
-      this.fetchData().then(() => {
-          this.setState({ refreshing: false })
-      });
+  _onRefresh = () => {
+    this.setState({refreshing: true});
+    fetchData().then(() => {
+      this.setState({refreshing: false});
+    });
   }
-  /*handleRefresh = () => {
-      this.setState(
-          {
-              refreshing: true,
-          }
-      );
-  };*/
   renderSeparator = () => {
       return (
           <View
@@ -63,11 +75,42 @@ export default class EventsScreen extends React.Component {
           />
       );
   };
-//   onCreateEventPress = () => {
-//       this.props.navigation.navigate("createEvent");
-//   }
-
   render() {
+
+    var sectionListData = [
+    ];
+    var testString = "";
+    
+    // sectionListData[0].title=this.state.name;
+
+    let title;
+    var data = [{title, title, title}];
+
+    var selectionItem = {title, data};
+    firebase.database().ref().child('events').on('value', function(snapshot) {
+        numEvents = snapshot.numChildren(); 
+        snapshot.forEach(function(item) {
+            var obj = item.val();
+            selectionItem.title = obj.date;
+            selectionItem.data[0].posterName = obj.host;
+            selectionItem.data[0].eventName = obj.title;
+            selectionItem.data[0].description = obj.description;
+            console.log(obj.title);
+            console.log(sectionListData.length);
+            sectionListData.push(selectionItem);
+        });
+    });    
+
+    sectionListData.push(selectionItem);
+    sectionListData.push(selectionItem);
+    sectionListData.push(selectionItem);
+    sectionListData.push(selectionItem);
+    sectionListData.push(selectionItem);
+    // sectionListData.push(selectionItem);
+    // sectionListData.push(selectionItem);
+
+    var hello = "hell world";
+
     return (
       <View style={styles.container}>
         <SectionList
@@ -117,8 +160,13 @@ export default class EventsScreen extends React.Component {
             sections={sectionListData}
             keyExtractor={(item, index) => item.eventName}
             ItemSeparatorComponent={this.renderSeparator}
-            refreshing={this.state.refreshing}
-            onRefresh={() => this.onRefresh}
+            refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this._onRefresh}
+                />
+              }
+       
         />
         <ActionButton buttonColor="#9E5EE8">
           <ActionButton.Item buttonColor='#9E5EE8' title="New Event" onPress={() => this.props.navigation.navigate('createEvent')}>
