@@ -20,34 +20,36 @@ export default class editProfileScreen extends React.Component {
 
 	constructor(){
 	    super();
-	    // console.ignoredYellowBox = [
-	    //   'Setting a timer'
-	    // ];  
+	    console.ignoredYellowBox = [
+	      'Setting a timer'
+	    ];  
+		this.database = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid);
 		const profRef = firebase.storage().ref().child("profile_images/" + firebase.auth().currentUser.uid);
 		const profImageURL = profRef.getDownloadURL();
 		this.state = {
 			profImageUrl: ''
 		}
-	    this.database = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/name'); 
-	    this.state = {
-	      name: ''
-	    }
-	    this.database2 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/email'); 
-	    this.state = {
-	      email: ''
-	    }
-	    this.database3 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/password'); 
-	    this.state = {
-	      password: ''
-	    }
-	    this.database4 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/bio'); 
-	    this.state = {
-	      bio: ''
-	    }
-	    this.database5 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/location'); 
-	    this.state = {
-	      location: ''
-	    }
+
+    this.database1 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/name'); 
+    this.state = {
+      name: ''
+    }
+    this.database2 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/email'); 
+    this.state = {
+      email: ''
+    }
+    this.database3 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/password'); 
+    this.state = {
+      password: ''
+    }
+    this.database4 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/bio'); 
+    this.state = {
+      bio: ''
+    }
+    this.database5 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/location'); 
+    this.state = {
+      location: ''
+    }
 	}
 	componentWillMount(){
 		this.startHeaderHeight = 100 + StatusBar.currentHeight;
@@ -57,7 +59,7 @@ export default class editProfileScreen extends React.Component {
 				profImageUrl: {uri: url}
 			})
 		});
-		this.database.on('value', snap => {
+		this.database1.on('value', snap => {
 		  this.setState({
 		    name: snap.val(),
 		  });
@@ -82,8 +84,6 @@ export default class editProfileScreen extends React.Component {
 		    location: snap.val(),
 		  });
 		});
-
-
 	}
 
 	onChooseImagePress = async () => {
@@ -98,7 +98,7 @@ export default class editProfileScreen extends React.Component {
 				Alert.alert(error);
 			})
 		}
-	}
+  }
 
 	uploadImage = async (uri, imageName) => {
 		const response = await fetch(uri);
@@ -108,144 +108,87 @@ export default class editProfileScreen extends React.Component {
 		return ref.put(blob);
 	}
 
-    onSaveProfilePress = () => {
-  //       if(firebase.auth().currentUser.name !== this.state.name) {
-		// 	changeName = (currentPassword, newName) => {
-		// 	  this.reauthenticate(currentPassword).then(() => {
-		// 	    // var user = firebase.auth().currentUser;
-		// 	    firebase.auth().currentUser.updateProfile(this.state.name).then(() => {
-		// 	      console.log("Name updated!");
-		// 	    }).catch((error) => { console.log(error); });
-		// 	  }).catch((error) => { console.log(error); });
-		// 	}
-		// }
-  //       if(firebase.auth().currentUser.currentPassword !== this.state.password) {
-		// 	changePassword = (currentPassword, newPassword) => {
-		// 	  this.reauthenticate(currentPassword).then(() => {
-		// 	    // var user = firebase.auth().currentUser;
-		// 	    firebase.auth().currentUser.updatePassword(this.state.password).then(() => {
-		// 	      console.log("Password updated!");
-		// 	    }).catch((error) => { console.log(error); });
-		// 	  }).catch((error) => { console.log(error); });
-		// 	}
-		// }
-		// if(firebase.auth().currentUser.email !== this.state.email) {
-		// 	changeEmail = (currentPassword, newEmail) => {
-		// 	  this.reauthenticate(currentPassword).then(() => {
-		// 	    // var user = firebase.auth().currentUser;
-		// 	    firebase.auth().currentUser.updateEmail(this.state.email).then(() => {
-		// 	      console.log("Email updated!");
-		// 	    }).catch((error) => { console.log(error); });
-		// 	  }).catch((error) => { console.log(error); });
-		// 	}
-		// }
-		// if(this.state.password !== this.state.passwordConfirm) {
-  //           Alert.alert("Passwords do not match");
-  //           return;
-  //       }
-	    this.props.navigation.navigate("Profile");
-    }
+  onSaveProfilePress = () => {
+  	
+    this.props.navigation.navigate("Profile");
+  }
 
+	deleteOKButton = () => {
+		firebase.auth().currentUser.delete().then(function () {
+		  console.log('delete successful?')
+		}).catch(function (error) {
+		  console.error({error})
+		})
+		console.log('OK Pressed')
+	}
+
+  onDeleteProfilePress = () => {
+		Alert.alert(
+		  'Delete Account',
+		  'Are you sure??',
+		  [
+		    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+		    {text: 'OK', onPress: this.deleteOKButton},
+		  ],
+		  { cancelable: false }
+		)
+  }
 	render() {
-
-
   	return(
-		<ScrollView style={styles.container}>
+
+		<ScrollView style={styles.container} keyboardDismissMode='on-drag'>
     	<View style={styles.container}>
-			
-			{/* edit profile picture */}
-			{/* can upload but not show*/}
-			<View style={styles.profileContainer}>
-				<TouchableOpacity onPress = {this.onChooseImagePress}>
-					<Image source={this.state.profImageUrl} style={styles.profileImage}  />
-				</TouchableOpacity>
-				<View>
-					{/* edit firstName lastName */}
-					<TextInput 
-						style={styles.nameText} 
-						value={this.state.name} 
-						onChangeText={(text) => { 
-							this.setState({name: text})}} />
-					{/* insert user information */}
-					<TextInput 
-						style={{marginLeft: 20, fontSize: 19}} 
-						value={this.state.location}
-						onChangeText={(text) => { this.setState({location: text}) } } />
+				{/* edit profile picture */}
+				{/* can upload but not show*/}
+				<View style={styles.profileContainer}>
+					<TouchableOpacity onPress = {this.onChooseImagePress}>
+						<Image source={this.state.profImageUrl} style={styles.profileImage}  />
+					</TouchableOpacity>
+					<View>
+						{/* edit firstName lastName */}
+						<TextInput 
+							style={styles.nameText} 
+							value={this.state.name} 
+							onChangeText={(name) => this.setState({name})}
+						/>
+						{/* insert user information */}
+						<TextInput 
+							style={{marginLeft: 20, fontSize: 19}} 
+							onChangeText={(location) => this.setState({location})} 
+							value={this.state.location}
+						/>
+					</View>
 				</View>
-   			</View>
 
 				{/* edit user bio */}
-			<View style={styles.informationContainer}>
-				<Text>Bio: </Text>
-				<TextInput 
-					multiline={true}
-					style={styles.bioText} 
-					value={this.state.bio}
-					onChangeText={(text) => { this.setState({bio: text}) } }/>
+				<View style={styles.informationContainer}>
+					<Text>Bio: </Text>
+					<TextInput 
+						multiline={true}
+						style={styles.bioText} 
+						onChangeText={(bio) => this.setState({bio})}
+						value={this.state.bio}
+					/>
 
-				{/* edit user email */}
-				<Text> Email: </Text> 
-				<TextInput 
-					style={styles.infoText} 
-					value={this.state.email} 
-					onChangeText={(text) => { this.setState({email: text}) } }/>
-			</View>
+					{/* edit user email */}
+					<Text> Email: </Text> 
+					<TextInput 
+						style={styles.infoText} 
+						onChangeText={(email) => this.setState({email})}
+						value={this.state.email} 
+					/>
+				</View>
 
 			{/* FIX: save button does not work */}
 			<Button title="Save" onPress={this.onSaveProfilePress} />
-		</View>
+
+			<Button title="DELETE ACCOUNT" onPress={this.onDeleteProfilePress} />
+			</View>
 		</ScrollView>	
   	);
 	}
 }
 
-
-	// render(){
-	// 	return(
-	// 		// <Button
-	// 		// 	title="Go back"
-	// 		// 	onPress={() => this.props.navigation.goBack(null)}
-	// 		// />
-      
-	// 		<KeyboardAvoidingView behavior="padding">
- //            <View style={{paddingTop:50, alignItems:"center"}}>
-	//             <Text>Name</Text>
-	//             <TextInput style={{width:200, height:40, borderWidth:1}}
-	//                 value={this.state.name}
-	//                 onChangeText={(text) => { this.setState({name: text}) } }
-	//                 />
-	//             <Text>Email</Text>
-	//             <TextInput style={{width:200, height:40, borderWidth:1}}
-	//                 value={this.state.email}
-	//                 onChangeText={(text) => { this.setState({email: text}) } }
-	//                 />
-	//             <Text>Location</Text>
-	//             <TextInput multiline={true} style={{width:200, height:40, borderWidth:1,}}
-	//                 value={this.state.location}
-	//                 onChangeText={(text) => { this.setState({location: text}) } }
-	//                 />
-	//             <Text>Bio</Text>
-	//             <TextInput multiline={true} style={{width:200, height:40, borderWidth:1,}}
-	//                 value={this.state.bio}
-	//                 onChangeText={(text) => { this.setState({bio: text}) } }
-	//                 />
-	//             <Text>Password</Text>
-	//             <TextInput secureTextEntry={true} style={{width:200, height:40, borderWidth:1, }}
-	//                 value={this.state.password}
-	//                 onChangeText={(text) => { this.setState({password: text}) }}
-	//                 />    
-	//             <Text>Password Confirm</Text>
-	//             <TextInput secureTextEntry={true} style={{width:200, height:40, borderWidth:1,}}
-	//                 value={this.state.passwordConfirm}
-	//                 onChangeText={(text) => { this.setState({passwordConfirm: text}) }}
-	//                 />      
-
- //            	<Button title="Save Profile" onPress={this.onSaveProfilePress} />    
- //            </View>
-	// 		</KeyboardAvoidingView>
-	// 	);
-	// }
-// }
 
 const styles = StyleSheet.create({
 	container:{
