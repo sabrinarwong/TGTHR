@@ -32,14 +32,14 @@ export default class createEventScreen extends React.Component {
                         SEE HOW ON THE TOP I IMPORT 'VIEW EVENT', WELL JUST DO THAT EZPZ. THEN WHEN A USER PRESSES ON AN EVENT, 
                         FETCH THE EVENT INFORMATION FROM FIREBASE AND PASS IT INTO JUST LIKE THIS: */}
                     <ViewEvent
-                    imageUri={{uri: "https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Ftenrens.jpg?alt=media&token=9e430f58-590c-4c2f-ad9c-3c546033232b" }}
-                    title="Ten Ren's secret meetup"
-                    date="11-18-18 18:01"
+                    imageUri={{uri: "https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/images%2Fdesk.PNG?alt=media&token=3d7b9a5f-119c-48bb-9732-5411bd53af83" }}
+                    title="Cry about Finals"
+                    date="2018-12-7 11:43"
                     location="33.18,-118.4"
-                    host="ryan"
-                    category="food"
-                    description="This is a secret meetup only for people who know where Ten Ren's is! We will never reveal our secrets..."
-                    eventID="eventID"
+                    host="Brandon"
+                    category="meme"
+                    description="We will cry about finals because classes are hard."
+                    eventID="-LSLgf7IckhqExqy64XT"
                     />
                 </View>
             </KeyboardAvoidingView>

@@ -179,12 +179,18 @@ export default class createEventScreen extends React.Component {
                         onChangeText={(text) => { this.setState({description: text}) } }
                         />
                     </View>
-                    <TouchableHighlight style={styles.inputContainer} onPress={this.pickImage}>
+                    <TouchableHighlight 
+                    style={styles.inputContainer} 
+                    onPress={this.pickImage}
+                    underlayColor={'#dddddd'}>
                         <Text style={styles.imageInputs} numberOfLines={1}> 
                         {this.state.image}
                         </Text>
                     </TouchableHighlight>
-                    <TouchableHighlight style={styles.buttonContainer} onPress={this.onCreateEventPress}>
+                    <TouchableHighlight 
+                    style={styles.buttonContainer} 
+                    onPress={this.onCreateEventPress}
+                    underlayColor={'#af79ec'}>
                         <Text style={styles.signUpText}>Create</Text>
                     </TouchableHighlight> 
 			</KeyboardAvoidingView>
