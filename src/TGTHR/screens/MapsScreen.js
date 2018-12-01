@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View} from 'react-native'
-import MapView from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
+
 
 export default class MapsScreen extends React.Component {
 	static navigationOptions = {
@@ -11,7 +12,52 @@ export default class MapsScreen extends React.Component {
 		headerStyle: {
 			backgroundColor: '#9E5EE8',
 		},
-	  };
+	};
+
+
+	readUserData(){
+		firebase.database().ref('events').once('value', function 
+			(snapshot) {
+				return(snapshot.val());
+			});
+	}
+
+	constructor(props){
+		super(props);
+		console.disableYellowBox=true;
+		this.state = {
+		  	markers: [{
+			    title: 'Ten Ren\'s Secret Meetup',
+			    date: "2018-11-30 10:42",
+
+				    coordinates: {
+				    	latitude: 33.975651,
+				    	longitude: -117.341459
+				    },
+				},
+
+				{
+				title: 'Cry about Finals',
+				date: "2018-12-7 11:43",
+					coordinates: {
+			     		latitude:33.973489,
+						longitude:-117.328171
+				    },
+				},
+				
+
+				{
+				title: "Hike to the C!",
+				date: "2018-11-30 21:22",
+					coordinates: {
+			     		latitude:33.975799,
+						longitude:-117.309653
+					},
+			
+		  	}]
+		}
+	};
+
 	render() {
 		return (
 			
@@ -26,31 +72,13 @@ export default class MapsScreen extends React.Component {
 					}}
 					>
 
-					<MapView.Marker
-						coordinate={{
-							latitude:33.975678,
-							longitude:-117.326184
-						}}
-						title={'Procrastinate CS180 project'}
-						description={'November 9: UCR WCH'}
-						/>
-					<MapView.Marker
-						coordinate={{
-							latitude:33.975651,
-							longitude:-117.341459
-						}}
-						title={'Ten Ren\'s secret meetup'}
-						description={'November 22: TenRen\'s Riverside'}
-						/>
-
-					<MapView.Marker
-						coordinate={{
-							latitude:33.973489,
-							longitude:-117.328171
-						}}
-						title={'Cry about finals'}
-						description={'December 7: UCR bell tower'}
-						/>
+					{this.state.markers.map( marker => (
+						<MapView.Marker
+							coordinate={marker.coordinates}
+							title={marker.title}
+							description={marker.date}
+							/>
+						))}
 				</MapView>
 			</View>
 			

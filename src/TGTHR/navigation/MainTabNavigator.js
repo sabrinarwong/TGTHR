@@ -9,6 +9,10 @@ import ProfileScreen from '../screens/ProfileScreen';
 import editProfileScreen from './../screens/components/edits/editProfileScreen';
 import AboutScreen from '../screens/AboutScreen';
 import MapsScreen from '../screens/MapsScreen';
+import createEventScreen from '../screens/components/post/createEventScreen';
+import viewEventScreen from '../screens/components/post/viewEventScreen';
+import viewEventScreen2 from '../screens/components/post/viewEventScreen2';
+import viewEventScreen3 from '../screens/components/post/viewEventScreen3';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -26,6 +30,10 @@ HomeStack.navigationOptions = {
 
 const EventsStack = createStackNavigator({
   Events: EventsScreen,
+  createEvent: createEventScreen,
+  viewEvent: viewEventScreen,
+  viewEvent2: viewEventScreen2,
+  viewEvent3: viewEventScreen3,
 });
 
 EventsStack.navigationOptions = {
