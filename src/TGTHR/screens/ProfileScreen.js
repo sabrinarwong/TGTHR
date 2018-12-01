@@ -26,7 +26,6 @@ export default class ProfileScreen extends React.Component {
 		},
 	};
 
-	
 
 	constructor(){
 	    super();
@@ -43,14 +42,17 @@ export default class ProfileScreen extends React.Component {
 	    }
 	    this.database3 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/bio'); 
 	    this.state = {
-	      bio: 'hi, I like to meet new people and try new things'
+	      bio: ''
 	    }
 	    this.database4 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/location'); 
 	    this.state = {
-	      location: 'chung 132'
+	      location: ''
 	    }
-	}
 
+	    // this.state = {
+	    // 	if
+	    // }
+	}
 
 
 	componentWillMount(){

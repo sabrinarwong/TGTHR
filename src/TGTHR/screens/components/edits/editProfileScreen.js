@@ -19,45 +19,45 @@ import { ImagePicker } from 'expo';
 export default class editProfileScreen extends React.Component {
 
 	constructor(){
-	    super();
+    super();
 	    console.ignoredYellowBox = [
 	      'Setting a timer'
 	    ];  
 		this.database = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid);
-		const profRef = firebase.storage().ref().child("profile_images/" + firebase.auth().currentUser.uid);
+		const profRef = firebase.storage().ref().child('profile_images/' + firebase.auth().currentUser.uid);
 		const profImageURL = profRef.getDownloadURL();
 		this.state = {
 			profImageUrl: ''
 		}
 
-    this.database1 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/name'); 
-    this.state = {
-      name: ''
-    }
-    this.database2 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/email'); 
-    this.state = {
-      email: ''
-    }
-    this.database3 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/password'); 
-    this.state = {
-      password: ''
-    }
-    this.database4 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/bio'); 
-    this.state = {
-      bio: ''
-    }
-    this.database5 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/location'); 
-    this.state = {
-      location: ''
-    }
+	    this.database1 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/name'); 
+	    this.state = {
+	      name: ''
+	    }
+	    this.database2 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/email'); 
+	    this.state = {
+	      email: ''
+	    }
+	    this.database3 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/password'); 
+	    this.state = {
+	      password: ''
+	    }
+	    this.database4 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/bio'); 
+	    this.state = {
+	      bio: ''
+	    }
+	    this.database5 = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/location'); 
+	    this.state = {
+	      location: ''
+	    }
 	}
 	componentWillMount(){
 		this.startHeaderHeight = 100 + StatusBar.currentHeight;
-		const profRef = firebase.storage().ref().child("profile_images/" + firebase.auth().currentUser.uid);
+		const profRef = firebase.storage().ref().child('profile_images/' + firebase.auth().currentUser.uid);
 		const profURL = profRef.getDownloadURL().then((url) => {
-			this.setState({
-				profImageUrl: {uri: url}
-			})
+				this.setState({
+					profImageUrl: {uri: url}
+				})
 		});
 		this.database1.on('value', snap => {
 		  this.setState({
@@ -113,7 +113,9 @@ export default class editProfileScreen extends React.Component {
     this.props.navigation.navigate("Profile");
   }
 
+// delete button doesnt delete info in database and storage of uid
 	deleteOKButton = () => {
+		// firebase.database().currentUser.ref().delete();
 		firebase.auth().currentUser.delete().then(function () {
 		  console.log('delete successful?')
 		}).catch(function (error) {
