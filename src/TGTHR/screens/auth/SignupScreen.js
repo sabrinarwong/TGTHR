@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View, Text, TextInput, TouchableHighlight, Alert, Image, KeyboardAvoidingView} from 'react-native';
 import * as firebase from 'firebase';
 
-function writeUserData(userId, name, email, bio, location, profImageUrl) {
+function writeUserData(userId, name, email, bio, location) {
     firebase.database().ref('users/' + userId).set({
       name: name,
       email: email,
@@ -10,9 +10,7 @@ function writeUserData(userId, name, email, bio, location, profImageUrl) {
       location: location,
     //   profile_picture : imageUrl
     });
-    firebase.storage().ref().child('profile_images/' + userId).set({
-        profImageUrl: profImageUrl,
-    })
+
   }
 
 export default class SignupScreen extends React.Component {
@@ -29,7 +27,6 @@ export default class SignupScreen extends React.Component {
             passwordConfirm: "",
             bio: "Hello!",
             location: "Somewhere nearby",
-            profImageUrl: {uri: "https://firebasestorage.googleapis.com/v0/b/cs180-tgthr.appspot.com/o/profile_images%2Fdefault.png?alt=media&token=bb9e5182-8c81-4661-b78d-1340c2ba464d"},
         };
     }
 
@@ -44,7 +41,7 @@ export default class SignupScreen extends React.Component {
         }
         firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
             .then(() => {
-                writeUserData(firebase.auth().currentUser.uid, this.state.name, this.state.email, this.state.bio, this.state.location, this.state.profImageUrl);
+                writeUserData(firebase.auth().currentUser.uid, this.state.name, this.state.email, this.state.bio, this.state.location);
             }, (error) => {
                 Alert.alert(error.message);
             });
