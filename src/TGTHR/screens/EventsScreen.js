@@ -18,7 +18,18 @@ import * as firebase from 'firebase';
 import TabBarIcon from '../components/TabBarIcon';
 
 
+function snapshotToArray(snapshot) {
+    var returnArr = [];
 
+    snapshot.forEach(function(childSnapshot) {
+        var item = childSnapshot.val();
+        item.key = childSnapshot.key;
+
+        returnArr.push(item);
+    });
+
+    return returnArr;
+};
 
 
 
@@ -44,23 +55,7 @@ export default class EventsScreen extends React.Component {
         // this.database = firebase.database().ref().child("/events/-LRdgRY8KahA9fPBvJUm/title");
         this.database = firebase.database().ref().child('users/yIYJ4NbWSDdgEU6GEvkaeJP5hQA3/bio');
         // this.database = firebase.database().ref().child('/users/' + firebase.auth().currentUser.uid + '/name'); 
-        // this.database = firebase.database().ref().child('events');
-        this.state = {
-            date1:'',
-            date2:'',
-            date3:'',
-            name1:'',
-            name2:'',
-            name3:'',
-            title1:'',
-            title2:'',
-            title3:'',
-            image1:'',
-            image2:'',
-            image3:'',
-        };
-       
-        
+        // this.database = firebase.database().ref().child('events'); 
     }
     componentWillMount(){
         var ref1 = firebase.database().ref().child('events/-LSLgf7IckhqExqy64XT/date');
@@ -159,32 +154,51 @@ export default class EventsScreen extends React.Component {
       );
   };
   render() {
+      this.sectionListData = [];
+    // this.selectionItem = {
+    //     data: [{
+    //         posterName: 'a',
+    //         eventName: 'a',
+    //         description: 'a',
+    //     }],
+    //     title: 'a',
+    // };
 
-    
-    // var testString = "";
-    
-    // sectionListData[0].title=this.state.name;
-
-    // let title;
-    // var data = [{title, title, title}];
-
-    // This is supposed to fetch from firebase events and push to sectionListData but it doesn't... (console.log does however.)
-
-    
     // firebase.database().ref().child('events').on('value', function(snapshot) {
     //     numEvents = snapshot.numChildren(); 
     //     snapshot.forEach(function(item) {
     //         var obj = item.val();
-    //         selectionItem.title = obj.date;
-    //         selectionItem.data[0].posterName = obj.host;
-    //         selectionItem.data[0].eventName = obj.title;
-    //         selectionItem.data[0].description = obj.description;
-    //         console.log(obj.title);
-    //         console.log(sectionListData.length);
-    //         sectionListData.push(selectionItem);
+    //         this.selectionItem = {
+    //             data: [{
+    //                 posterName: obj.host,
+    //                 eventName: obj.title,
+    //                 description: obj.description,
+    //             }],
+    //             title: obj.date,
+    //         };
+    //         temparray.push
     //     });
+    //     this.sectionListData.push(this.selectionItem);
     // });    
 
+    // var testvar = 
+
+    // firebase.database().ref('/events').on('value', function(snapshot) {
+    //     var eee = [];
+    //     for(var i = 0; i < snapshot.numChildren(); i++){
+    //         var obj = snapshotToArray(snapshot)[i];
+    //         this.selectionItem = {
+    //             data: [{
+    //                 posterName: obj.host,
+    //                 eventName: obj.title,
+    //                 description: obj.description,
+    //                 }],
+    //             title: obj.date,
+    //         };
+    //         eee.push(i);
+    //     }
+    //     return eee;
+    // });
     
     this.selectionItem =  {
         data: [
@@ -197,6 +211,7 @@ export default class EventsScreen extends React.Component {
         ],
         title : this.state.date1,
     };
+    this.sectionListData.push(this.selectionItem);
     this.selectionItem2 =  {
         data: [
             {
@@ -208,6 +223,7 @@ export default class EventsScreen extends React.Component {
         ],
         title : this.state.date2,
     };
+    this.sectionListData.push(this.selectionItem2);
     this.selectionItem3 =  {
         data: [
             {
@@ -219,41 +235,7 @@ export default class EventsScreen extends React.Component {
         ],
         title : this.state.date3,
     };
-
-    this.sectionListData = [];
-
-    this.sectionListData.push(this.selectionItem);
-    this.sectionListData.push(this.selectionItem2);
     this.sectionListData.push(this.selectionItem3);
-
-    // this.selectionItem2 =  {title2, data2};
-
-    // this.selectionItem.title = this.state.date1;
-    // this.selectionItem.data[0].posterName = this.state.name1;
-    // this.selectionItem.data[0].eventName = this.state.title1;
-    // this.selectionItem.data[0].description = this.state.date1;
-
-    // this.sectionListData[0] = this.selectionItem;
-
-    // this.selectionItem2.title = this.state.date2;
-    // this.selectionItem2.data[0].posterName = this.state.name2;
-    // this.selectionItem2.data[0].eventName = this.state.title2;
-    // this.selectionItem2.data[0].description = this.state.date2; 
-
-    // this.sectionListData[1] = this.selectionItem2;
-
-    // this.sectionListData.push(this.selectionItem);
-
-    // this.selectionItem.title = this.state.date3;
-    // this.selectionItem.data[0].posterName = this.state.name3;
-    // this.selectionItem.data[0].eventName = this.state.title3;
-    // this.selectionItem.data[0].description = this.state.date3;
-
-    // this.sectionListData.push(this.selectionItem);
-    // this.sectionListData.push(this.selectionItem);
-    // this.sectionListData.push(this.selectionItem);
-    // this.sectionListData.push(this.selectionItem);
-    // this.sectionListData.push(this.selectionItem);
 
     return (
       <View style={styles.container}>
@@ -317,13 +299,13 @@ export default class EventsScreen extends React.Component {
           <ActionButton.Item buttonColor='#9E5EE8' title="New Event" onPress={() => this.props.navigation.navigate('createEvent')}>
             <TabBarIcon name="md-create" style={styles.actionButtonIcon} />
           </ActionButton.Item>
-          <ActionButton.Item buttonColor='#9E5EE8' title={this.selectionItem.title} onPress={() => this.props.navigation.navigate('viewEvent')}>
+          <ActionButton.Item buttonColor='#9E5EE8' title={this.selectionItem.data[0].eventName} onPress={() => this.props.navigation.navigate('viewEvent')}>
             <TabBarIcon name="md-list" style={styles.actionButtonIcon} />
           </ActionButton.Item>
-          <ActionButton.Item buttonColor='#9E5EE8' title={this.selectionItem2.title} onPress={() => this.props.navigation.navigate('viewEvent2')}>
+          <ActionButton.Item buttonColor='#9E5EE8' title={this.selectionItem2.data[0].eventName} onPress={() => this.props.navigation.navigate('viewEvent2')}>
             <TabBarIcon name="md-list" style={styles.actionButtonIcon} />
           </ActionButton.Item>
-          <ActionButton.Item buttonColor='#9E5EE8' title={this.selectionItem3.title} onPress={() => this.props.navigation.navigate('viewEvent3')}>
+          <ActionButton.Item buttonColor='#9E5EE8' title={this.selectionItem3.data[0].eventName} onPress={() => this.props.navigation.navigate('viewEvent3')}>
             <TabBarIcon name="md-list" style={styles.actionButtonIcon} />
           </ActionButton.Item>
           </ActionButton>  
