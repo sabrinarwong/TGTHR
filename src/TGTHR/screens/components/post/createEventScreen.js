@@ -53,8 +53,7 @@ export default class createEventScreen extends React.Component {
 
     pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
-            allowsEditing: true,
-            base64: true,
+            base64: true
           });
       if (!result.cancelled) {
             this.setState({
@@ -62,6 +61,14 @@ export default class createEventScreen extends React.Component {
             });
           }
     };
+
+    uploadImage = async (uri, eventKey) => { 
+        const response = await fetch(uri);
+        const blob = await response.blob();
+
+        var ref = firebase.storage().ref().update("event_images/" + eventKey);
+		return ref.put(blob);
+    }
     
     onCreateEventPress = () => {
 
@@ -86,6 +93,20 @@ export default class createEventScreen extends React.Component {
             return;
         }
 
+        //get a key for a new event
+        var newPostKey = firebase.database().ref().child('events').push().key;
+
+        //Upload Image to FireBase storage
+        this.uploadImage(this.state.image, newPostKey)
+        .catch((error) => {
+            Alert.alert(error);
+        })
+        
+        // const imageRef = firebase.storage().ref("event_images/" + newPostKey);
+        // imageRef.getDownloadURL().then((url) => {
+        //     imageURL = url;
+        // });
+
         var eventData = {
             host: this.state.host,
             title: this.state.title,
@@ -95,9 +116,6 @@ export default class createEventScreen extends React.Component {
             description: this.state.description,
             image: this.state.image
         };
-        
-        //get a key for a new event
-        var newPostKey = firebase.database().ref().child('events').push().key;
 
         //write the new event's data in the events list
         var updates = {};
