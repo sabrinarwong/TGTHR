@@ -239,7 +239,7 @@ export default class EventsScreen extends React.Component {
 
     return (
       <View style={styles.container}>
-        <SectionList
+        <SectionList 
             renderSectionHeader={({ section }) => 
                     <View style={{
                         flex: 1,
