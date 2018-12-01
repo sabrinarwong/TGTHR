@@ -32,3 +32,13 @@ DONE
 
 
 
+
+
+
+
+Not part of original user stories but done:
+profile: edit, upload photo, bio, location, delete...
+event - upload image
+signupscreen: forgot password
+map screen - render events on map
+about screen
