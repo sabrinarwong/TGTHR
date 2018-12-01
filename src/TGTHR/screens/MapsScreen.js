@@ -21,23 +21,40 @@ export default class MapsScreen extends React.Component {
 				return(snapshot.val());
 			});
 	}
+
 	constructor(props){
 		super(props);
+		console.disableYellowBox=true;
 		this.state = {
-		  markers: [{
-		    title: 'hello',
-			    coordinates: {
-			    	latitude: 33.975651,
-			    	longitude: -117.341459
-			    },
-			   },
-			  {
-			    title: 'hello',
-			    coordinates: {
-			     	latitude:33.973489,
-					longitude:-117.328171
-			    },  
-		  }]
+		  	markers: [{
+			    title: 'Ten Ren\'s Secret Meetup',
+			    date: "2018-11-30 10:42",
+
+				    coordinates: {
+				    	latitude: 33.975651,
+				    	longitude: -117.341459
+				    },
+				},
+
+				{
+				title: 'Cry about Finals',
+				date: "2018-12-7 11:43",
+					coordinates: {
+			     		latitude:33.973489,
+						longitude:-117.328171
+				    },
+				},
+				
+
+				{
+				title: "Hike to the C!",
+				date: "2018-11-30 21:22",
+					coordinates: {
+			     		latitude:33.975799,
+						longitude:-117.309653
+					},
+			
+		  	}]
 		}
 	};
 
@@ -59,7 +76,7 @@ export default class MapsScreen extends React.Component {
 						<MapView.Marker
 							coordinate={marker.coordinates}
 							title={marker.title}
-							description={marker.title}
+							description={marker.date}
 							/>
 						))}
 				</MapView>
