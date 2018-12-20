@@ -8,7 +8,7 @@ This project was created using [React Native](https://facebook.github.io/react-n
 
 # Video
 
-(In progress)
+https://youtu.be/_hPbaQIK1mM
 
 # How it works
 Quick and dirty breakdown on app layout: 
