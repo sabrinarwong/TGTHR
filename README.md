@@ -4,7 +4,7 @@ TGTHR brings people together in thousands of cities to do more of what they want
 
 # About
 
-This project was created using [React Native](https://facebook.github.io/react-native/) and [Firebase](https://firebase.google.com/) for UCR's CS180 Software Engineering class. It is a joint collaboration between [Ryan Yuzuki](https://github.com/ryuzu001), [Brandon Tran](https://github.com/regice), [Apollo Truong](https://github.com/apollotruong) and [Sabrina Wong](https://github.com/swong040)
+This project was created using [React Native](https://facebook.github.io/react-native/) and [Firebase](https://firebase.google.com/) for UCR's CS180 Software Engineering class. It is a joint collaboration between [Ryan Yuzuki](https://github.com/ryuzu001), [Brandon Tran](https://github.com/regice), [Apollo Truong](https://github.com/apollotruong) and [Sabrina Wong](https://github.com/sabrinarwong)
 
 # Video
 
